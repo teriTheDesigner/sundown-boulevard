@@ -40,13 +40,22 @@ export default function Date() {
         <div className="flex flex-col gap-20">
           <div className="flex flex-col gap-6">
             <p>Number of guests</p>
-            <div className="flex  gap-6">
-              <button type="button" onClick={addGuest}>
+            <div className="flex  items-center gap-6">
+              <button
+                className="h-8 w-6 bg-white text-black"
+                type="button"
+                onClick={addGuest}
+              >
                 +
               </button>
               <p>{customer.people}</p>
               <button
                 type="button"
+                className={`${
+                  customer.people <= 1
+                    ? " h-8 w-6 bg-gray-500 text-black"
+                    : "h-8 w-6 bg-white text-black"
+                }`}
                 onClick={removeGuest}
                 disabled={customer.people <= 1 ? true : false}
               >
@@ -77,25 +86,50 @@ export default function Date() {
           />
         </label>
       </form>
-      <div className="flex flex-col gap-4 text-sm">
+      <div className=" flex flex-col gap-4 border-l border-white pl-4 text-sm">
         <h5>Your Order</h5>
-        <p className="text-xs">Date:</p>
-        <p>{customer.date.date}</p>
-        <p className="text-xs">Time:</p>
-        <p>{customer.date.time}</p>
+        {customer.date.date && (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs">Date:</p>
+            <p className="text-xs">{customer.date.date}</p>
+          </div>
+        )}
 
-        <p className="text-xs">Meal: </p>
-        <p className="text-xs">{customer.meal}</p>
-        <p className="text-xs">Drinks: </p>
-        <div className="text-xs">
-          {customer.drinks.map((drink, index) => (
-            <p key={index}>{drink}</p>
-          ))}
+        {customer.date.time && (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs">Time:</p>
+            <p className="text-xs">{customer.date.time}</p>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-2">
+          <p className="text-xs">Guests:</p>
+          <p className="text-xs"> {customer.people}</p>
         </div>
+        {customer.meal && (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs">Meal: </p>
+            <p className="text-xs">{customer.meal}</p>
+          </div>
+        )}
 
-        <Link href="/booking/date">
-          <button className="h-8 w-24  rounded-lg border-2 border-white text-xs">
-            Continue
+        {customer.drinks.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs">Drinks: </p>
+            <div className="text-xs">
+              {customer.drinks.map((drink, index) => (
+                <p key={index}>{drink}</p>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Link href="/booking/receipt">
+          <button
+            className="h-8 w-24  rounded-lg border-2 border-white text-xs"
+            disabled={customer.drinks.length ? false : true}
+          >
+            ORDER
           </button>
         </Link>
       </div>
