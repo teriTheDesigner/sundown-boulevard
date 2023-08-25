@@ -12,8 +12,8 @@ const initialState = {
     drinks: [],
     people: 1,
     date: {
-      month: "",
-      day: "",
+      date: "",
+
       time: "",
     },
   },
@@ -38,6 +38,36 @@ const formReducer = (state, action) => {
           drinks: [...state.customer.drinks, action.payload],
         },
       };
+
+    case "UPDATE_DATE":
+      const { date, time } = action.payload;
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          date: {
+            date: date,
+            time: time,
+          },
+        },
+      };
+    case "ADD_GUEST":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          people: state.customer.people + 1,
+        },
+      };
+    case "REMOVE_GUEST":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          people: state.customer.people - 1,
+        },
+      };
+
     default:
       return state;
   }
