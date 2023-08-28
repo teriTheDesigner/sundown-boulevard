@@ -42,6 +42,10 @@ export default function Date() {
       payload: e.target.value,
     });
   };
+  function storeData() {
+    console.log(customer);
+    localStorage.setItem(customer.email, JSON.stringify(customer));
+  }
   return (
     <div className="content-container mx-auto ">
       <Stepper></Stepper>
@@ -113,6 +117,7 @@ export default function Date() {
 
           <Link href="/booking/receipt">
             <button
+              onClick={storeData}
               className="h-8 w-24  rounded-lg border-2 border-white text-xs"
               disabled={customer.drinks.length ? false : true}
             >

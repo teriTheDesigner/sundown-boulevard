@@ -1,9 +1,8 @@
-import ContextProvider from "./Context";
-
+import ContextProvider from "../booking/Context";
 export default function BookingLayout({ children }) {
   return (
-    <ContextProvider>
-      <div>{children}</div>
-    </ContextProvider>
+    <div>
+      <ContextProvider>{children}</ContextProvider>
+    </div>
   );
 }

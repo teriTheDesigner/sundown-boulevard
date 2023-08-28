@@ -2,8 +2,20 @@
 
 import Slider from "./components/Slider";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [email, setEmail] = useState();
+
+  function getEmail(e) {
+    setEmail(e.target.value);
+  }
+  function findOrder() {
+    const previousCustomer = JSON.parse(localStorage.getItem(email));
+    console.log(previousCustomer);
+  }
+
+  console.log(email);
   return (
     <main className=" mx-auto grid max-w-screen-md grid-cols-7 gap-8">
       <div className=" col-start-1 col-end-8">
@@ -24,12 +36,16 @@ export default function Home() {
         <label className=" flex flex-col gap-2 text-sm">
           Your email
           <input
-            className="h-8 w-60 rounded-lg"
+            onChange={getEmail}
+            className="h-8 w-60 rounded-lg text-black"
             type="email"
             placeholder="your@email.com"
           ></input>
         </label>
-        <button className=" h-8 w-32  rounded-lg border-2 border-white text-sm">
+        <button
+          onClick={findOrder}
+          className=" h-8 w-32  rounded-lg border-2 border-white text-sm"
+        >
           FIND ORDER
         </button>
       </div>

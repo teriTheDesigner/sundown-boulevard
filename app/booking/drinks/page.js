@@ -11,6 +11,7 @@ import Stepper from "@/app/components/Stepper";
 export default function Drinks() {
   const [drinks, setDrinks] = useState();
   const dispatch = useContext(DispatchContext);
+  const { customer } = useContext(Context);
 
   useEffect(() => {
     FetchDrinks();
@@ -31,8 +32,9 @@ export default function Drinks() {
     });
   };
   return (
-    <div className="content-container mx-auto flex flex-col ">
+    <div className="content-container mx-auto flex flex-col gap-4 ">
       <Stepper></Stepper>
+
       <div className="flex justify-between">
         <div className="grid grid-cols-3 gap-6">
           {drinks
@@ -70,10 +72,22 @@ export default function Drinks() {
           <Basket></Basket>
 
           <Link href="/booking/date">
-            <button className="h-8 w-24  rounded-lg border-2 border-white text-xs">
-              Continue
+            <button
+              className={` h-8 w-24 rounded-lg border-2 text-xs ${
+                customer.drinks.length
+                  ? "border-white  text-white"
+                  : "border-gray-500 text-gray-500"
+              }`}
+              disabled={customer.drinks.length ? false : true}
+            >
+              NEXT
             </button>
           </Link>
+          {customer.drinks.length ? null : (
+            <p className="max-w-[60%] text-xs">
+              Please choose at least one drink to continue.
+            </p>
+          )}
         </div>
       </div>
     </div>
