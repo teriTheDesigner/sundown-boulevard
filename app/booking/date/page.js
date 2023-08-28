@@ -1,13 +1,13 @@
 "use client";
 
 import { Context, DispatchContext } from "../Context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 
 export default function Date() {
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
-
+  const [errors, setErrors] = useState({});
   const changeDate = (e) => {
     const selectedDate = e.target.value;
     const date = selectedDate.split("T")[0];
@@ -34,6 +34,12 @@ export default function Date() {
     });
   };
 
+  const addEmail = (e) => {
+    dispatch({
+      type: "ADD_EMAIL",
+      payload: e.target.value,
+    });
+  };
   return (
     <div className="content-container mx-auto flex justify-between">
       <form className="flex gap-20">
@@ -41,14 +47,6 @@ export default function Date() {
           <div className="flex flex-col gap-6">
             <p>Number of guests</p>
             <div className="flex  items-center gap-6">
-              <button
-                className="h-8 w-6 bg-white text-black"
-                type="button"
-                onClick={addGuest}
-              >
-                +
-              </button>
-              <p>{customer.people}</p>
               <button
                 type="button"
                 className={`${
@@ -60,6 +58,19 @@ export default function Date() {
                 disabled={customer.people <= 1 ? true : false}
               >
                 -
+              </button>{" "}
+              <p>{customer.people}</p>
+              <button
+                disabled={customer.people >= 10 ? true : false}
+                className={`${
+                  customer.people >= 10
+                    ? " h-8 w-6 bg-gray-500 text-black"
+                    : "h-8 w-6 bg-white text-black"
+                }`}
+                type="button"
+                onClick={addGuest}
+              >
+                +
               </button>
             </div>
           </div>
@@ -70,6 +81,7 @@ export default function Date() {
                 className="  h-8 w-60 rounded-lg p-2 text-black"
                 type="email"
                 placeholder="your@email.com"
+                onChange={addEmail}
               ></input>
             </label>
           </div>
@@ -80,8 +92,8 @@ export default function Date() {
             className=" h-8 w-60 rounded-lg p-2 text-black"
             type="datetime-local"
             name="booking"
-            min="2023-08-31T09:30"
-            max="2024-09-22T16:45"
+            min="2023-08-31T16:00"
+            max="2024-09-22T23:00"
             onChange={changeDate}
           />
         </label>

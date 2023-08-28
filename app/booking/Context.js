@@ -67,6 +67,14 @@ const formReducer = (state, action) => {
           people: state.customer.people - 1,
         },
       };
+    case "ADD_EMAIL":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          email: action.payload,
+        },
+      };
 
     default:
       return state;
