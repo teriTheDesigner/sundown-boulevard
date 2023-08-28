@@ -2,6 +2,8 @@
 import { useContext } from "react";
 import { Context } from "../Context";
 
+import Link from "next/link";
+
 export default function Receipt() {
   const { customer } = useContext(Context);
   return (
@@ -33,6 +35,10 @@ export default function Receipt() {
             ))}
           </div>
         </div>
+
+        <Link href="/">
+          <button>HOME</button>
+        </Link>
       </div>
     </div>
   );

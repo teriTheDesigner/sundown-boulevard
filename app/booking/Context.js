@@ -13,7 +13,6 @@ const initialState = {
     people: 1,
     date: {
       date: "",
-
       time: "",
     },
   },
