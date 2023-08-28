@@ -5,11 +5,12 @@ import { DispatchContext, Context } from "../Context";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Basket from "@/app/components/Basket";
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState();
   const dispatch = useContext(DispatchContext);
-  const { customer } = useContext(Context);
+
   useEffect(() => {
     FetchDrinks();
   }, []);
@@ -24,7 +25,7 @@ export default function Drinks() {
   const addDrinks = (drinkName) => {
     console.log("adding", { drinkName }, "to drinks");
     dispatch({
-      type: "UPDATE_DRINKS",
+      type: "ADD_DRINK",
       payload: drinkName,
     });
   };
@@ -67,14 +68,15 @@ export default function Drinks() {
         <div className="flex flex-col gap-4 text-sm">
           <h5>Your Order</h5>
 
-          <p className="text-xs">Meal: </p>
+          {/* <p className="text-xs">Meal: </p>
           <p className="text-xs">{customer.meal}</p>
           <p className="text-xs">Drinks: </p>
           <div className="text-xs">
             {customer.drinks.map((drink, index) => (
               <p key={index}>{drink}</p>
             ))}
-          </div>
+          </div> */}
+          <Basket></Basket>
 
           <Link href="/booking/date">
             <button className="h-8 w-24  rounded-lg border-2 border-white text-xs">

@@ -30,12 +30,24 @@ const formReducer = (state, action) => {
         },
       };
 
-    case "UPDATE_DRINKS":
+    case "ADD_DRINK":
       return {
         ...state,
         customer: {
           ...state.customer,
           drinks: [...state.customer.drinks, action.payload],
+        },
+      };
+
+    case "REMOVE_DRINK":
+      const index = action.payload;
+      const updatedDrinks = [...state.customer.drinks];
+      updatedDrinks.splice(index, 1);
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          drinks: updatedDrinks,
         },
       };
 

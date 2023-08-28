@@ -3,11 +3,12 @@
 import { Context, DispatchContext } from "../Context";
 import { useContext, useState } from "react";
 import Link from "next/link";
+import Basket from "@/app/components/Basket";
 
 export default function Date() {
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState();
   const changeDate = (e) => {
     const selectedDate = e.target.value;
     const date = selectedDate.split("T")[0];
@@ -100,41 +101,11 @@ export default function Date() {
       </form>
       <div className=" flex flex-col gap-4 border-l border-white pl-4 text-sm">
         <h5>Your Order</h5>
-        {customer.date.date && (
-          <div className="flex flex-col gap-2">
-            <p className="text-xs">Date:</p>
-            <p className="text-xs">{customer.date.date}</p>
-          </div>
-        )}
-
-        {customer.date.time && (
-          <div className="flex flex-col gap-2">
-            <p className="text-xs">Time:</p>
-            <p className="text-xs">{customer.date.time}</p>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2  ">
           <p className="text-xs">Guests:</p>
           <p className="text-xs"> {customer.people}</p>
         </div>
-        {customer.meal && (
-          <div className="flex flex-col gap-2">
-            <p className="text-xs">Meal: </p>
-            <p className="text-xs">{customer.meal}</p>
-          </div>
-        )}
-
-        {customer.drinks.length > 0 && (
-          <div className="flex flex-col gap-2">
-            <p className="text-xs">Drinks: </p>
-            <div className="text-xs">
-              {customer.drinks.map((drink, index) => (
-                <p key={index}>{drink}</p>
-              ))}
-            </div>
-          </div>
-        )}
+        <Basket></Basket>
 
         <Link href="/booking/receipt">
           <button
