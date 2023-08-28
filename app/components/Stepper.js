@@ -21,7 +21,7 @@ export default function Stepper() {
             </h1>
             <p className="text-xs">
               By choosing to continue, your current meal selection will be
-              replaced with a new meal. Please make sure you're certain about
+              replaced with a new meal. Please make sure you are certain about
               this decision before proceeding.
             </p>
             <div className="flex justify-around">
