@@ -6,18 +6,90 @@ import { useState } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState();
+  const [previousCustomer, setPreviousCustomer] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function hideModal() {
+    setModalVisible(false);
+  }
 
   function getEmail(e) {
     setEmail(e.target.value);
   }
   function findOrder() {
-    const previousCustomer = JSON.parse(localStorage.getItem(email));
-    console.log(previousCustomer);
+    setModalVisible(true);
+    setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
   }
+  console.log(previousCustomer);
 
-  console.log(email);
   return (
     <main className=" mx-auto grid max-w-screen-md grid-cols-7 gap-8">
+      {modalVisible && (
+        <div className="modal-overlay">
+          <div className="modal w-1/2 ">
+            {previousCustomer ? (
+              <div className=" flex flex-col gap-4">
+                <h1>
+                  <b>Your Order</b>
+                </h1>
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs">Date:</p>
+                  <p className="text-xs">{previousCustomer.date.date}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs">Time:</p>
+                  <p className="text-xs">{previousCustomer.date.time}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs">Guests:</p>
+                  <p className="text-xs"> {previousCustomer.people}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs">Meal: </p>
+                  <p className="text-xs">{previousCustomer.meal}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs">Drinks: </p>
+                  <div className="text-xs">
+                    {previousCustomer.drinks.map((drink, index) => (
+                      <p key={index}>{drink}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-around">
+                  <button
+                    className="h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
+                    onClick={hideModal}
+                  >
+                    CLOSE
+                  </button>
+
+                  <Link href="/booking">
+                    <button className="h-8 w-28 rounded-lg border-2 border-black  bg-black text-xs text-white ">
+                      UPDATE ORDER
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-6 text-center ">
+                <h1 className="mb-2 text-lg font-bold">Email Not Found</h1>
+                <p className="text-xs">
+                  We couldn't locate your email in our records. Please make sure
+                  you have entered the correct email address or consider
+                  creating a new reservation.
+                </p>
+                <button
+                  className=" h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
+                  onClick={hideModal}
+                >
+                  CLOSE
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       <div className=" col-start-1 col-end-8">
         <Slider></Slider>
       </div>
