@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Basket from "@/app/components/Basket";
+import Stepper from "@/app/components/Stepper";
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState();
@@ -31,17 +32,7 @@ export default function Drinks() {
   };
   return (
     <div className="content-container mx-auto flex flex-col ">
-      <div className="mb-8 flex w-1/2 justify-between  text-xs text-gray-300 ">
-        <Link href="/booking">
-          <p>Meal</p>
-        </Link>
-        <Link href="/booking/drinks">
-          <p className="text-sm text-white">Drinks</p>
-        </Link>
-        <Link href="/booking/date">
-          <p>Date</p>
-        </Link>
-      </div>
+      <Stepper></Stepper>
       <div className="flex justify-between">
         <div className="grid grid-cols-3 gap-6">
           {drinks

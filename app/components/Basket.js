@@ -17,7 +17,7 @@ export default function Basket() {
     console.log("Removing drink with index", index);
   };
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex max-w-[80%] flex-col gap-4">
       {customer.date.date && (
         <div className="flex flex-col gap-2 border-t pt-1">
           <p className="text-xs">Date:</p>

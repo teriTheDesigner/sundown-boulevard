@@ -38,13 +38,14 @@ export default function Booking() {
     <div className="content-container  mx-auto flex flex-col  justify-around gap-6  ">
       <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
         <Link href="/booking">
-          <p>Meal</p>
+          <p>1. Meal</p>
         </Link>
+
         <Link href="/booking/drinks">
-          <p>Drinks</p>
+          <p>2. Drinks</p>
         </Link>
         <Link href="/booking/date">
-          <p>Date</p>
+          <p>3. Date</p>
         </Link>
       </div>
 
