@@ -75,8 +75,8 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center gap-6 text-center ">
                 <h1 className="mb-2 text-lg font-bold">Email Not Found</h1>
                 <p className="text-xs">
-                  We couldn't locate your email in our records. Please make sure
-                  you have entered the correct email address or consider
+                  We couldn&apos;t locate your email in our records. Please make
+                  sure you have entered the correct email address or consider
                   creating a new reservation.
                 </p>
                 <button
