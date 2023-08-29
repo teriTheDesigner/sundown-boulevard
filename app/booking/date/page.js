@@ -1,6 +1,6 @@
 "use client";
 
-import { Context, DispatchContext } from "../Context";
+import { Context, DispatchContext } from "../../Context";
 import { useContext, useState } from "react";
 import Link from "next/link";
 import Basket from "@/app/components/Basket";
@@ -118,10 +118,10 @@ export default function Date() {
           <Link href="/booking/receipt">
             <button
               onClick={storeData}
-              className="h-8 w-24  rounded-lg border-2 border-white text-xs"
+              className="h-8 w-28  rounded-lg border-2 border-white text-xs"
               disabled={customer.drinks.length ? false : true}
             >
-              ORDER
+              {customer.previousCustomer ? "UPDATE ORDER" : "ORDER"}
             </button>
           </Link>
         </div>

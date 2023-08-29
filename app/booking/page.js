@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useContext } from "react";
-import { DispatchContext } from "@/app/booking/Context";
+import { DispatchContext } from "@/app/Context";
 import Link from "next/link";
 
 export default function Booking() {
@@ -13,7 +13,6 @@ export default function Booking() {
     console.log("adding", mealName, "to Meals");
     dispatch({
       type: "UPDATE_MEAL",
-
       payload: mealName,
     });
   };

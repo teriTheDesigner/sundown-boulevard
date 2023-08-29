@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { DispatchContext, Context } from "../Context";
+import { DispatchContext, Context } from "../../Context";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";

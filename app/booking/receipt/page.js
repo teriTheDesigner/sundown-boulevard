@@ -1,6 +1,6 @@
 "use client";
 import { useContext } from "react";
-import { Context } from "../Context";
+import { Context } from "../../Context";
 
 import Link from "next/link";
 

@@ -2,7 +2,7 @@
 
 import { useContext } from "react";
 
-import { Context, DispatchContext } from "../booking/Context";
+import { Context, DispatchContext } from "../Context";
 
 export default function Basket() {
   const { customer } = useContext(Context);

@@ -2,12 +2,15 @@
 
 import Slider from "./components/Slider";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { Context, DispatchContext } from "@/app/Context";
 
 export default function Home() {
   const [email, setEmail] = useState();
   const [previousCustomer, setPreviousCustomer] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const { customer } = useContext(Context);
+  const dispatch = useContext(DispatchContext);
 
   function hideModal() {
     setModalVisible(false);
@@ -20,7 +23,17 @@ export default function Home() {
     setModalVisible(true);
     setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
   }
-  console.log(previousCustomer);
+
+  useEffect(() => {
+    updateCustomer();
+  }, [previousCustomer]);
+
+  function updateCustomer() {
+    dispatch({
+      type: "UPDATE_CUSTOMER",
+      payload: previousCustomer,
+    });
+  }
 
   return (
     <main className=" mx-auto grid max-w-screen-md grid-cols-7 gap-8">
