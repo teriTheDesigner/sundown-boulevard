@@ -1,7 +1,9 @@
 "use client";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 
 import { Context, DispatchContext } from "../../Context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Link from "next/link";
 import Basket from "@/app/components/Basket";
 import Stepper from "@/app/components/Stepper";
@@ -12,9 +14,8 @@ export default function Date() {
   const [error, setError] = useState();
   const changeDate = (e) => {
     const selectedDate = e.target.value;
-    const date = selectedDate.split("T")[0];
-    const time = selectedDate.split("T")[1];
-    console.log("Full date:", selectedDate);
+    const [date, time] = selectedDate.split(" ");
+    console.log("Full date:", e.target.value);
     console.log("Selected date", date);
     console.log("selected time", time);
 
@@ -23,6 +24,39 @@ export default function Date() {
       payload: { date, time },
     });
   };
+
+  useEffect(() => {
+    const inputElement = document.getElementById("dateTimeInput");
+
+    if (inputElement) {
+      flatpickr(inputElement, {
+        locale: {
+          firstDayOfWeek: 1,
+        },
+        minDate: "today",
+        enableTime: true,
+        minTime: "16:00",
+        maxTime: "22:30",
+        time_24hr: true,
+        disable: [
+          function (date) {
+            return date.getDay() === 0 || date.getDay() === 6;
+          },
+        ],
+        onChange: (selectedDates, dateStr, instance) => {
+          const [date, time] = dateStr.split(" ");
+          console.log("Full date:", dateStr);
+          console.log("Selected date", date);
+          console.log("selected time", time);
+
+          dispatch({
+            type: "UPDATE_DATE",
+            payload: { date, time },
+          });
+        },
+      });
+    }
+  }, []);
 
   const addGuest = () => {
     dispatch({
@@ -46,6 +80,7 @@ export default function Date() {
     console.log(customer);
     localStorage.setItem(customer.email, JSON.stringify(customer));
   }
+
   return (
     <div className="content-container mx-auto ">
       <Stepper></Stepper>
@@ -98,12 +133,10 @@ export default function Date() {
           <label className="flex flex-col  gap-8">
             Pick a date and time for your booking:
             <input
-              className=" h-8 w-60 rounded-lg p-2 text-black"
-              type="datetime-local"
+              id="dateTimeInput"
+              className=" h-8 w-60 rounded-lg p-2 text-sm text-black"
               name="booking"
-              min="2023-08-31T16:00"
-              max="2024-09-22T23:00"
-              onChange={changeDate}
+              placeholder="YYYY-MM-DD"
             />
           </label>
         </form>
