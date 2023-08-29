@@ -107,7 +107,7 @@ export default function Date() {
             />
           </label>
         </form>
-        <div className=" flex flex-col gap-4 border-l border-white pl-4 text-sm">
+        <div className=" fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
           <h5>Your Order</h5>
           <div className="flex flex-col gap-2  ">
             <p className="text-xs">Guests:</p>

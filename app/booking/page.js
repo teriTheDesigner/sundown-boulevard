@@ -2,12 +2,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useContext } from "react";
-import { DispatchContext } from "@/app/Context";
+import { Context, DispatchContext } from "@/app/Context";
 import Link from "next/link";
+import Basket from "../components/Basket";
 
 export default function Booking() {
   const [meal, setMeal] = useState();
   const dispatch = useContext(DispatchContext);
+  const { customer } = useContext(Context);
 
   const addMeal = (mealName) => {
     console.log("adding", mealName, "to Meals");
@@ -49,41 +51,44 @@ export default function Booking() {
       </div>
 
       <div className="flex justify-between">
-        <div className="flex w-1/3 flex-col gap-4 ">
+        <div className="flex w-1/3 flex-col items-center gap-4 ">
           {meal ? (
             <>
               <h2>{meal.mealName} </h2>
               <p className="text-sm">Category: {meal.category}</p>
 
               <Image
-                width="200"
-                height="200"
-                className="w-full"
+                width="150"
+                height="150"
+                className="w-3/4"
                 src={meal.mealImg}
                 alt="mealImg"
               ></Image>
             </>
           ) : null}
 
-          <button
-            onClick={FetchMeal}
-            className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-sm"
-          >
-            New Meal
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-4 text-sm">
-          <h5>Your Order</h5>
-
-          <p className="text-xs">Meal: </p>
-          {meal ? <p className="text-xs">{meal.mealName}</p> : null}
-
-          <Link href="/booking/drinks">
+          <div className="flex gap-4 ">
+            <button
+              onClick={FetchMeal}
+              className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
+            >
+              NEW MEAL
+            </button>
             <button
               onClick={() => addMeal(meal.mealName)}
-              className="h-8 w-24  rounded-lg border-2 border-white text-xs"
+              className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
             >
+              CHOOSE MEAL
+            </button>
+          </div>
+        </div>
+
+        <div className="fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
+          <h5>Your Order</h5>
+          <Basket></Basket>
+
+          <Link href="/booking/drinks">
+            <button className="h-8 w-24  rounded-lg border-2 border-white text-xs">
               Continue
             </button>
           </Link>

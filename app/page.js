@@ -25,8 +25,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    updateCustomer();
-  }, [previousCustomer]);
+    {
+      previousCustomer ? updateCustomer() : null;
+    }
+  }, []);
 
   function updateCustomer() {
     dispatch({

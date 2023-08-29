@@ -31,6 +31,7 @@ export default function Drinks() {
       payload: drinkName,
     });
   };
+
   return (
     <div className="content-container mx-auto flex flex-col gap-4 ">
       <Stepper></Stepper>
@@ -58,17 +59,9 @@ export default function Drinks() {
               ))
             : null}
         </div>
-        <div className="flex flex-col gap-4 text-sm">
+        <div className=" fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
           <h5>Your Order</h5>
 
-          {/* <p className="text-xs">Meal: </p>
-          <p className="text-xs">{customer.meal}</p>
-          <p className="text-xs">Drinks: </p>
-          <div className="text-xs">
-            {customer.drinks.map((drink, index) => (
-              <p key={index}>{drink}</p>
-            ))}
-          </div> */}
           <Basket></Basket>
 
           <Link href="/booking/date">
