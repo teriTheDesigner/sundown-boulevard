@@ -20,24 +20,30 @@
   }
 }
 
-@font-face {
-  font-family: "Helvetica Neue Regular";
+html {
+  @apply font-sans;
+}
 
+@font-face {
+  font-family: "Helvetica Neue";
   src:
     url("https://db.onlinewebfonts.com/t/0d49fc455f4a8951a42daf952412a713.woff2")
       format("woff2"),
     url("https://db.onlinewebfonts.com/t/0d49fc455f4a8951a42daf952412a713.woff")
       format("woff");
+  font-weight: 400;
 }
 
 @font-face {
-  font-family: "Helvetica Neue Thin";
+  font-family: "Helvetica Neue";
   src: url("../public/fonts/Helvetica-Neue-Thin.woff2");
+  font-weight: 100;
 }
 
 @font-face {
-  font-family: "Helvetica Neue Black";
+  font-family: "Helvetica Neue";
   src: url("../public/fonts/HelveticaNeue-BlackExt.woff2");
+  font-weight: 900;
 }
 
 body {
@@ -46,18 +52,20 @@ body {
 }
 
 .content-container {
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 .helvetica-regular {
-  font-family: "Helvetica Neue Regular";
+  font-family: "Helvetica Neue";
 }
 
 .helvetica-thin {
-  font-family: "Helvetica Neue Thin";
+  font-family: "Helvetica Neue";
+  font-weight: 100;
 }
 .helvetica-black {
-  font-family: "Helvetica Neue Black";
+  font-family: "Helvetica Neue";
+  font-weight: 900;
 }
 
 .modal-overlay {

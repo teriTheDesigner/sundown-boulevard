@@ -6,6 +6,10 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["var(--font-sans)"],
+    },
+
     colors: {
       "background-white": "rgb(246, 240, 240)",
       "dark-purple": "rgb(60, 21, 59)",

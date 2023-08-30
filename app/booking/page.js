@@ -6,11 +6,25 @@ import { Context, DispatchContext } from "@/app/Context";
 import Link from "next/link";
 import Basket from "../components/Basket";
 
+function getRandomPastelColor() {
+  const hue = Math.floor(Math.random() * 360);
+  const saturation = 25 + Math.floor(Math.random() * 50);
+  const lightness = 70 + Math.floor(Math.random() * 10);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
 export default function Booking() {
   const [meal, setMeal] = useState();
   const dispatch = useContext(DispatchContext);
   const { customer } = useContext(Context);
+  const [backgroundColor, setBackgroundColor] = useState(
+    getRandomPastelColor(),
+  );
 
+  const changeBackgroundColor = () => {
+    const randomColor = getRandomPastelColor();
+    setBackgroundColor(randomColor);
+  };
   const addMeal = (mealName) => {
     console.log("adding", mealName, "to Meals");
     dispatch({
@@ -31,12 +45,14 @@ export default function Booking() {
     const mealName = data.meals[0].strMeal;
     const mealImg = data.meals[0].strMealThumb;
     const category = data.meals[0].strCategory;
-
     setMeal({ mealName, mealImg, category });
+    changeBackgroundColor();
   }
 
   return (
-    <div className="content-container  mx-auto flex flex-col  justify-around gap-6  ">
+    <div
+      className={`content-container bg-${backgroundColor} mx-auto flex flex-col justify-around gap-6`}
+    >
       <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
         <Link href="/booking">
           <p>1. Meal</p>

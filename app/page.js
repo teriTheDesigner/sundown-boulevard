@@ -40,7 +40,7 @@ export default function Home() {
   }
 
   return (
-    <main className=" mx-auto flex max-w-screen-md flex-col gap-28">
+    <main className=" content-container mx-auto flex flex-col gap-28">
       <section className="grid grid-cols-7  gap-4 ">
         {modalVisible && (
           <div className="modal-overlay">
@@ -109,23 +109,20 @@ export default function Home() {
           </div>
         )}
 
-        <div className=" col-start-1 col-end-5">
+        <h1 className="   col-start-1 col-end-5 place-self-center text-9xl opacity-20">
+          <b>
+            BREWS <br /> &<br /> BITES
+          </b>
+        </h1>
+        <div className="col-start-5 col-end-8 flex  flex-col place-items-center ">
           <Slider></Slider>
-        </div>
-
-        <div className=" col-start-6 col-end-8 flex h-1/2 flex-col justify-between border-2 border-white p-5 ">
-          <h4>Place your order here</h4>
-
           <Link href="/booking">
-            <button className=" h-8 w-28  rounded-lg border-2 border-white text-sm">
-              ORDER
+            <button className="   h-8 w-28  rounded-lg border-2 border-white text-sm">
+              BOOK NOW!
             </button>
           </Link>
         </div>
 
-        <h1 className=" helvetica-regular  absolute top-3/4 col-start-1 col-end-8 text-8xl opacity-20">
-          <b>BREWS & BITES</b>
-        </h1>
         <div className=" col-start-1 col-end-8 flex h-64 w-2/3 flex-col place-items-center justify-evenly justify-self-center border-2 p-5">
           <h4>FIND YOUR ORDER HERE</h4>
           <div className=" flex items-end gap-4">
@@ -133,7 +130,7 @@ export default function Home() {
               Your email
               <input
                 onChange={getEmail}
-                className="text-dark-purple helvetica-thin h-8 w-60 rounded-lg p-2"
+                className="text-dark-purple h-8 w-60 rounded-lg p-2 font-black"
                 type="email"
                 placeholder="your@email.com"
               ></input>
@@ -182,7 +179,7 @@ export default function Home() {
       </section>
       <section className=" flex flex-col  place-items-center gap-20">
         <div className="flex flex-col   place-items-center">
-          <h1 className=" helvetica-regular top-4/5  absolute col-start-1 col-end-8  text-8xl opacity-20">
+          <h1 className="  top-4/5  absolute col-start-1 col-end-8  text-8xl opacity-20">
             <b>BROWSE</b>
           </h1>
           <p className="pt-8 text-xl">THROUGH OUR FAVORITES</p>
