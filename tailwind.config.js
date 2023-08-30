@@ -6,13 +6,15 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    /*   colors: {
-      red: "#ba2329",
-      blue: "#007ddb",
-    }, */
-    fontFamily: {
-      helvetica: ["HELVETICA NEUE", "Helvetica", "Arial", "sans-serif"],
+    colors: {
+      "background-white": "rgb(246, 240, 240)",
+      "dark-purple": "rgb(60, 21, 59)",
+      "light-turquoise": "rgb(32, 163, 158)",
+      "dark-yellow": "rgb(255, 186, 73)",
+      "dark-red": "rgb(186, 36, 41)",
+      "dark-blue": "rgb(0, 125, 219)",
     },
+
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

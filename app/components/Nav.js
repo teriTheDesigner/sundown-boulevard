@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/public/images/beachpink.png";
 export default function Nav() {
   return (
     <header className=" mb-8 flex h-16 items-center justify-around">
       <Link href="/#">
-        <p>LOGO</p>
+        <Image width="40" height="40" src={logo} alt="logo"></Image>
       </Link>
       <nav className="flex gap-8">
         <li className="list-none">

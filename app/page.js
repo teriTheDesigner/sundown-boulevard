@@ -105,6 +105,7 @@ export default function Home() {
           </div>
         </div>
       )}
+
       <div className=" col-start-1 col-end-5">
         <Slider></Slider>
       </div>
