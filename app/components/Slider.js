@@ -5,10 +5,10 @@ import "./Stepper.module.css";
 import { useState } from "react";
 
 const images = [
-  "https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-  "https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-  "https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-  "https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
+  "/images/mae-mu-8Vh6ulKc50o-unsplash.jpg",
+  "/images/edward-howell-VXIpXxpZ5ms-unsplash.jpg",
+  "/images/gaby-yerden-lDyreMNIo5A-unsplash.jpg",
+  "/images/olena-sergienko-JjGLEN7T8xI-unsplash.jpg",
 ];
 export default function Slider() {
   const [details, setDetails] = useState(null);
