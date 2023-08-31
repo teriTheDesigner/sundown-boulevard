@@ -10,7 +10,6 @@ import { useState, useContext, useEffect } from "react";
 import { Context, DispatchContext } from "@/app/Context";
 
 export default function Home() {
-  AOS.init();
   const [email, setEmail] = useState();
   const [previousCustomer, setPreviousCustomer] = useState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,6 +28,10 @@ export default function Home() {
     setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
     console.log("finding order");
   }
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   useEffect(() => {
     console.log("updating order ", previousCustomer);
