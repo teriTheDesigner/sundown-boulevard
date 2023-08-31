@@ -6,30 +6,16 @@ import { Context, DispatchContext } from "@/app/Context";
 import Link from "next/link";
 import Basket from "../components/Basket";
 
-function getRandomPastelColor() {
-  const hue = Math.floor(Math.random() * 360);
-  const saturation = 25 + Math.floor(Math.random() * 50);
-  const lightness = 70 + Math.floor(Math.random() * 10);
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-}
-
 export default function Booking() {
   const [meal, setMeal] = useState();
   const dispatch = useContext(DispatchContext);
   const { customer } = useContext(Context);
-  const [backgroundColor, setBackgroundColor] = useState(
-    getRandomPastelColor(),
-  );
 
-  const changeBackgroundColor = () => {
-    const randomColor = getRandomPastelColor();
-    setBackgroundColor(randomColor);
-  };
-  const addMeal = (mealName) => {
-    console.log("adding", mealName, "to Meals");
+  const addMeal = (mealName, mealId, mealCategory, mealImg) => {
+    console.log("adding", mealName, mealId, mealCategory, mealImg, "to Meals");
     dispatch({
       type: "UPDATE_MEAL",
-      payload: mealName,
+      payload: { mealName, mealId, mealCategory, mealImg },
     });
   };
 
@@ -43,15 +29,27 @@ export default function Booking() {
     );
     const data = await res.json();
     const mealName = data.meals[0].strMeal;
+    const mealId = data.meals[0].idMeal;
     const mealImg = data.meals[0].strMealThumb;
     const category = data.meals[0].strCategory;
-    setMeal({ mealName, mealImg, category });
-    changeBackgroundColor();
+
+    setMeal({ mealName, mealImg, category, mealId });
+  }
+
+  function changeMeal() {
+    if (customer.meal) {
+      dispatch({
+        type: "CLEAR_MEAL",
+      });
+      FetchMeal();
+    } else {
+      FetchMeal();
+    }
   }
 
   return (
     <div
-      className={`content-container bg-${backgroundColor} mx-auto flex flex-col justify-around gap-6`}
+      className={`content-container mx-auto flex flex-col justify-around gap-6`}
     >
       <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
         <Link href="/booking">
@@ -68,35 +66,38 @@ export default function Booking() {
 
       <div className="flex justify-between">
         <div className="flex w-1/3 flex-col items-center gap-4 ">
-          {meal ? (
+          {customer.meal ? (
             <>
-              <h2>{meal.mealName} </h2>
-              <p className="text-sm">Category: {meal.category}</p>
-
+              <h2>{customer.meal}</h2>
+              <p className="text-sm">Category: {customer.mealCategory}</p>
               <Image
                 width="150"
                 height="150"
-                className="w-3/4"
+                className="w-full"
+                src={customer.mealImg}
+                alt="mealImg"
+              />
+            </>
+          ) : meal ? (
+            <>
+              <h2>{meal.mealName}</h2>
+              <p className="text-sm">Category: {meal.category}</p>
+              <Image
+                width="150"
+                height="150"
+                className="w-full"
                 src={meal.mealImg}
                 alt="mealImg"
-              ></Image>
+              />
             </>
           ) : null}
 
-          <div className="flex gap-4 ">
-            <button
-              onClick={FetchMeal}
-              className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
-            >
-              NEW MEAL
-            </button>
-            <button
-              onClick={() => addMeal(meal.mealName)}
-              className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
-            >
-              CHOOSE MEAL
-            </button>
-          </div>
+          <button
+            onClick={changeMeal}
+            className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
+          >
+            NEW MEAL
+          </button>
         </div>
 
         <div className="fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
@@ -104,7 +105,12 @@ export default function Booking() {
           <Basket></Basket>
 
           <Link href="/booking/drinks">
-            <button className="h-8 w-24  rounded-lg border-2 border-white text-xs">
+            <button
+              onClick={() =>
+                addMeal(meal.mealName, meal.mealId, meal.category, meal.mealImg)
+              }
+              className="h-8 w-24  rounded-lg border-2 border-white text-xs"
+            >
               Continue
             </button>
           </Link>

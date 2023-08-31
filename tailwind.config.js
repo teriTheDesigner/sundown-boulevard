@@ -7,7 +7,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["var(--font-sans)"],
+      helvetica: ["var(--font-helvetica)"],
     },
 
     colors: {

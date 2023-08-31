@@ -77,8 +77,8 @@ export default function Drinks() {
             </button>
           </Link>
           {customer.drinks.length ? null : (
-            <p className="max-w-[60%] text-xs">
-              Please choose at least one drink to continue.
+            <p className=" max-w-[60%] text-xs">
+              Please choose a drink to continue.
             </p>
           )}
         </div>

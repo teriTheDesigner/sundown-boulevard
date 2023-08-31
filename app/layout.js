@@ -1,13 +1,26 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+
+import localFont from "next/font/local";
 
 import Nav from "@/app/components/Nav.js";
 import ContextProvider from "./Context";
 
-const interFont = Inter({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-sans",
+const helvetica = localFont({
+  variable: "--font-helvetica",
+  src: [
+    {
+      path: "../public/fonts/Helvetica-Neue-Regular.woff2",
+      weight: "400",
+    },
+    {
+      path: "../public/fonts/Helvetica-Neue-Thin.woff2",
+      weight: "100",
+    },
+    {
+      path: "../public/fonts/HelveticaNeue-BlackExt.woff2",
+      weight: "700",
+    },
+  ],
 });
 
 export const metadata = {
@@ -17,7 +30,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={interFont.variable}>
+    <html lang="en" className={`${helvetica.variable} font-helvetica `}>
       <ContextProvider>
         <body className="">
           <Nav></Nav>

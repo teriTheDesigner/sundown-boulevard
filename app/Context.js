@@ -10,6 +10,9 @@ const initialState = {
     previousCustomer: false,
     email: "",
     meal: "",
+    mealId: "",
+    mealImg: "",
+    mealCategory: "",
     drinks: [],
     people: 1,
     date: {
@@ -22,11 +25,15 @@ const initialState = {
 const formReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_MEAL":
+      const meal = action.payload;
       return {
         ...state,
         customer: {
           ...state.customer,
-          meal: action.payload,
+          meal: meal.mealName,
+          mealId: meal.mealId,
+          mealCategory: meal.mealCategory,
+          mealImg: meal.mealImg,
         },
       };
 
@@ -87,9 +94,40 @@ const formReducer = (state, action) => {
           email: action.payload,
         },
       };
+
+    case "CLEAR_BASKET":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          email: "",
+          meal: "",
+          mealId: "",
+          mealImg: "",
+          mealCategory: "",
+          drinks: [],
+          people: 1,
+          date: {
+            date: "",
+            time: "",
+          },
+          previousCustomer: false,
+        },
+      };
+    case "CLEAR_MEAL":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          meal: "",
+          mealId: "",
+          mealCategory: "",
+          mealImg: "",
+        },
+      };
+
     case "UPDATE_CUSTOMER":
       const customer = action.payload;
-
       return {
         ...state,
         customer: {
@@ -99,6 +137,9 @@ const formReducer = (state, action) => {
           drinks: customer?.drinks,
           people: customer?.people,
           date: customer?.date,
+          mealCategory: customer?.mealCategory,
+          mealImg: customer?.mealImg,
+          mealId: customer?.mealId,
           previousCustomer: true,
         },
       };

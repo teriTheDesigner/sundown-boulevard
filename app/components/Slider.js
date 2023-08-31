@@ -5,7 +5,7 @@ import "./Stepper.module.css";
 import { useState } from "react";
 
 const images = [
-  "/images/mae-mu-8Vh6ulKc50o-unsplash.jpg",
+  "/images/gaby-yerden-lDyreMNIo5A-unsplash.jpg",
   "/images/edward-howell-VXIpXxpZ5ms-unsplash.jpg",
   "/images/gaby-yerden-lDyreMNIo5A-unsplash.jpg",
   "/images/olena-sergienko-JjGLEN7T8xI-unsplash.jpg",

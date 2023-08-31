@@ -12,18 +12,6 @@ export default function Date() {
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
   const [error, setError] = useState();
-  const changeDate = (e) => {
-    const selectedDate = e.target.value;
-    const [date, time] = selectedDate.split(" ");
-    console.log("Full date:", e.target.value);
-    console.log("Selected date", date);
-    console.log("selected time", time);
-
-    dispatch({
-      type: "UPDATE_DATE",
-      payload: { date, time },
-    });
-  };
 
   useEffect(() => {
     const inputElement = document.getElementById("dateTimeInput");

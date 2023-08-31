@@ -20,10 +20,7 @@
   }
 }
 
-html {
-  @apply font-sans;
-}
-
+/* 
 @font-face {
   font-family: "Helvetica Neue";
   src:
@@ -44,7 +41,7 @@ html {
   font-family: "Helvetica Neue";
   src: url("../public/fonts/HelveticaNeue-BlackExt.woff2");
   font-weight: 900;
-}
+} */
 
 body {
   color: var(--dark-purple);
@@ -55,7 +52,7 @@ body {
   max-width: 1000px;
 }
 
-.helvetica-regular {
+/* .helvetica-regular {
   font-family: "Helvetica Neue";
 }
 
@@ -66,7 +63,7 @@ body {
 .helvetica-black {
   font-family: "Helvetica Neue";
   font-weight: 900;
-}
+} */
 
 .modal-overlay {
   position: fixed;

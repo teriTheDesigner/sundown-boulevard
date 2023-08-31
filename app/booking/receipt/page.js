@@ -1,11 +1,18 @@
 "use client";
 import { useContext } from "react";
-import { Context } from "../../Context";
+import { Context, DispatchContext } from "../../Context";
 
 import Link from "next/link";
 
 export default function Receipt() {
   const { customer } = useContext(Context);
+  const dispatch = useContext(DispatchContext);
+
+  function clearBasket() {
+    dispatch({
+      type: "CLEAR_BASKET",
+    });
+  }
   return (
     <div className="content-container  mx-auto">
       <div className="  flex w-1/3 flex-col gap-4 bg-white  p-4 text-black">
@@ -37,7 +44,7 @@ export default function Receipt() {
         </div>
 
         <Link href="/">
-          <button>HOME</button>
+          <button onClick={clearBasket}>HOME</button>
         </Link>
       </div>
     </div>
