@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Stepper from "../components/Stepper";
 import Image from "next/image";
 import { useContext } from "react";
 import { Context, DispatchContext } from "@/app/Context";
@@ -16,6 +17,11 @@ export default function Booking() {
     dispatch({
       type: "UPDATE_MEAL",
       payload: { mealName, mealId, mealCategory, mealImg },
+    });
+
+    dispatch({
+      type: "CHANGE_STEP",
+      payload: "drinks",
     });
   };
 
@@ -51,7 +57,7 @@ export default function Booking() {
     <div
       className={`content-container mx-auto flex flex-col justify-around gap-6`}
     >
-      <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
+      {/* <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
         <Link href="/booking">
           <p>1. Meal</p>
         </Link>
@@ -62,7 +68,9 @@ export default function Booking() {
         <Link href="/booking/date">
           <p>3. Date</p>
         </Link>
-      </div>
+      </div> */}
+
+      <Stepper></Stepper>
 
       <div className="flex justify-between">
         <div className="flex w-1/3 flex-col items-center gap-4 ">
@@ -94,13 +102,13 @@ export default function Booking() {
 
           <button
             onClick={changeMeal}
-            className="h-8 w-32  place-self-end rounded-lg border-2 border-white text-xs"
+            className="border-white h-8  w-32 place-self-end rounded-lg border-2 text-xs"
           >
             NEW MEAL
           </button>
         </div>
 
-        <div className="fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
+        <div className="border-white fixed right-24 flex flex-col gap-4 border-l pl-4 text-sm">
           <h5>Your Order</h5>
           <Basket></Basket>
 
@@ -109,11 +117,12 @@ export default function Booking() {
               onClick={() =>
                 addMeal(meal.mealName, meal.mealId, meal.category, meal.mealImg)
               }
-              className="h-8 w-24  rounded-lg border-2 border-white text-xs"
+              className="h-8 w-24 rounded-lg  border-2 border-dark-purple text-xs text-dark-purple"
             >
               Continue
             </button>
           </Link>
+          {customer.meal ? null : <span>Please choose a meal.</span>}
         </div>
       </div>
     </div>

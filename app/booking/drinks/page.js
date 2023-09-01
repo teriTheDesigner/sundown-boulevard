@@ -32,6 +32,13 @@ export default function Drinks() {
     });
   };
 
+  function changeStep(value) {
+    dispatch({
+      type: "CHANGE_STEP",
+      payload: value,
+    });
+  }
+
   return (
     <div className="content-container mx-auto flex flex-col gap-4 ">
       <Stepper></Stepper>
@@ -59,7 +66,7 @@ export default function Drinks() {
               ))
             : null}
         </div>
-        <div className=" fixed right-24 flex flex-col gap-4 border-l border-white pl-4 text-sm">
+        <div className=" border-white fixed right-24 flex flex-col gap-4 border-l pl-4 text-sm">
           <h5>Your Order</h5>
 
           <Basket></Basket>
@@ -68,9 +75,10 @@ export default function Drinks() {
             <button
               className={` h-8 w-24 rounded-lg border-2 text-xs ${
                 customer.drinks.length
-                  ? "border-white  text-white"
-                  : "border-gray-500 text-gray-500"
+                  ? "border-dark-purple  text-dark-purple"
+                  : "border-light-gray text-light-gray"
               }`}
+              onClick={() => changeStep("date")}
               disabled={customer.drinks.length ? false : true}
             >
               NEXT

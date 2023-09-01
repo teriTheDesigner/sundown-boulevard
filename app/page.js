@@ -15,6 +15,7 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
+  const [error, setError] = useState();
 
   function hideModal() {
     setModalVisible(false);
@@ -35,9 +36,13 @@ export default function Home() {
 
   useEffect(() => {
     console.log("updating order ", previousCustomer);
-    {
-      previousCustomer ? updateCustomer() : null;
+    if (previousCustomer) {
+      updateCustomer();
     }
+
+    // {
+    //   previousCustomer ? updateCustomer() : null;
+    // }
   }, [previousCustomer]);
 
   function updateCustomer() {
@@ -47,8 +52,28 @@ export default function Home() {
     });
   }
 
+  const handleBlur = (value) => {
+    console.log("handle blur");
+    if (value.trim() === "") {
+      setError("");
+    } else if (!value.includes("@")) {
+      setError("Please enter a valid email.");
+    }
+  };
+
+  const handleFocus = () => {
+    console.log("handle focus");
+    setError("");
+  };
+
+  function changeStep() {
+    dispatch({
+      type: "CHANGE_STEP",
+      payload: "meal",
+    });
+  }
   return (
-    <main className=" content-container mx-auto flex flex-col gap-28">
+    <main className=" content-container mx-auto flex flex-col gap-28 text-dark-purple">
       <section className="h- grid grid-cols-7 gap-4 ">
         {modalVisible && (
           <div className="modal-overlay">
@@ -84,14 +109,17 @@ export default function Home() {
                   </div>
                   <div className="flex justify-around">
                     <button
-                      className="h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
+                      className="border-gray-300 text-black h-8 w-24 rounded-lg  border-2 text-xs "
                       onClick={hideModal}
                     >
                       CLOSE
                     </button>
 
                     <Link href="/booking">
-                      <button className="h-8 w-28 rounded-lg border-2 border-black  bg-black text-xs text-white ">
+                      <button
+                        onClick={changeStep}
+                        className="border-black bg-black text-white h-8 w-28  rounded-lg border-2 text-xs "
+                      >
                         UPDATE ORDER
                       </button>
                     </Link>
@@ -106,7 +134,7 @@ export default function Home() {
                     consider creating a new reservation.
                   </p>
                   <button
-                    className=" h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
+                    className=" border-gray-300 text-black h-8 w-24 rounded-lg  border-2 text-xs "
                     onClick={hideModal}
                   >
                     CLOSE
@@ -123,7 +151,10 @@ export default function Home() {
           <div className="col-start-2 col-end-3 flex  flex-col place-items-center ">
             <Slider></Slider>
             <Link href="/booking">
-              <button className="   mt-4 h-12  w-44 rounded-lg border-2 border-white text-sm">
+              <button
+                onClick={changeStep}
+                className="   mt-4 h-12  w-44 rounded-lg border-2 border-dark-purple text-sm text-dark-purple hover:bg-dark-purple hover:text-background-white"
+              >
                 BOOK A TABLE
               </button>
             </Link>
@@ -133,24 +164,29 @@ export default function Home() {
       <section
         data-aos="fade-up"
         data-aos-duration="700"
-        className="bg-dark-purple flex flex-col  place-items-center bg-opacity-10 "
+        className="flex flex-col place-items-center  bg-dark-purple bg-opacity-10 "
       >
         <div className=" m-32 flex w-3/4 flex-col place-items-center justify-evenly gap-10 justify-self-center border-2  p-20">
           <h4>FIND YOUR ORDER HERE</h4>
 
-          <div className=" flex items-end gap-4">
+          <div className="flex  items-end gap-4">
             <label className=" flex flex-col gap-2  text-sm">
               Your email
               <input
+                onBlur={(e) => handleBlur(e.target.value)}
+                onFocus={() => handleFocus()}
                 onChange={getEmail}
-                className="text-dark-purple h-8 w-60 rounded-lg p-2 font-thin"
+                className="focus:outline-rose-500 h-12 w-60 rounded-lg p-2 font-thin  text-dark-purple"
                 type="email"
                 placeholder="your@email.com"
               ></input>
+              {error && (
+                <span className="text-dark-red opacity-80">{error}</span>
+              )}
             </label>
             <button
               onClick={findOrder}
-              className="  h-8 w-32 rounded-lg  border-2 text-sm  "
+              className="  h-12 w-32 rounded-lg  border-2 text-sm  "
             >
               FIND ORDER
             </button>
@@ -163,7 +199,7 @@ export default function Home() {
         id="menu"
         className=" flex flex-col "
       >
-        <h1 className="text-dark-red mb-8 text-4xl opacity-30">MENU</h1>
+        <h1 className="mb-8 text-4xl text-dark-red opacity-30">MENU</h1>
         <div className="helvetica-thin grid grid-cols-2 border-t ">
           <p className="col-start-1 col-end-2 p-4">Lunch</p>
           <p className=" col-start-2 col-end-3 border-l border-r p-4 ">
@@ -222,7 +258,7 @@ export default function Home() {
           alt="gaby-yerden-lDyreMNIo5A-unsplash.jpg"
         ></Image>
         <div className="flex flex-col gap-4 border-l pl-4">
-          <h2 className="text-dark-purple text-5xl opacity-20">ABOUT US</h2>
+          <h2 className="text-5xl text-dark-purple opacity-20">ABOUT US</h2>
           <p className="helvetica-thin text-xs">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

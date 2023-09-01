@@ -3,67 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --black: black;
   --background: rgb(246, 240, 240);
   --dark-purple: rgb(60, 21, 59);
   --turquoise: rgb(32, 163, 158);
   --dark-yellow: rgb(255, 186, 73);
   --dark-red: rgb(186, 36, 41);
   --dark-blue: rgb(0, 125, 219);
+  --light-gray: rgb(145, 144, 144);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-/* 
-@font-face {
-  font-family: "Helvetica Neue";
-  src:
-    url("https://db.onlinewebfonts.com/t/0d49fc455f4a8951a42daf952412a713.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/0d49fc455f4a8951a42daf952412a713.woff")
-      format("woff");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Helvetica Neue";
-  src: url("../public/fonts/Helvetica-Neue-Thin.woff2");
-  font-weight: 100;
-}
-
-@font-face {
-  font-family: "Helvetica Neue";
-  src: url("../public/fonts/HelveticaNeue-BlackExt.woff2");
-  font-weight: 900;
-} */
 
 body {
-  color: var(--dark-purple);
   background: var(--background);
+  color: var(--dark-purple);
 }
 
 .content-container {
   max-width: 1000px;
 }
-
-/* .helvetica-regular {
-  font-family: "Helvetica Neue";
-}
-
-.helvetica-thin {
-  font-family: "Helvetica Neue";
-  font-weight: 100;
-}
-.helvetica-black {
-  font-family: "Helvetica Neue";
-  font-weight: 900;
-} */
 
 .modal-overlay {
   position: fixed;
@@ -80,7 +36,6 @@ body {
 }
 
 .modal {
-  color: black;
   background-color: white;
   padding: 20px;
   border-radius: 8px;

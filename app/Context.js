@@ -7,6 +7,7 @@ export const DispatchContext = createContext();
 
 const initialState = {
   customer: {
+    step: "",
     previousCustomer: false,
     email: "",
     meal: "",
@@ -37,6 +38,14 @@ const formReducer = (state, action) => {
         },
       };
 
+    case "CHANGE_STEP":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          step: action.payload,
+        },
+      };
     case "ADD_DRINK":
       return {
         ...state,
