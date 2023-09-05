@@ -144,7 +144,12 @@ export default function Home() {
             BREWS <br /> &<br /> BITES
           </h1>
           <div className="col-start-2 col-end-3 flex  flex-col place-items-center ">
-            <img src="/images/elevate-snnhGYNqm44-unsplash.jpg" alt="beerPic" />
+            <Image
+              width={500}
+              height={300}
+              src="/images/elevate-snnhGYNqm44-unsplash.jpg"
+              alt="beerPic"
+            />
             <Link href="/booking">
               <button
                 onClick={changeStep}
@@ -267,10 +272,10 @@ export default function Home() {
             those seeking a perfect blend of craft beers, creative cocktails,
             and delectable cuisine. Our team of passionate chefs crafts dishes
             using locally sourced ingredients to create a menu that tantalizes
-            the taste buds. Whether you're looking for a casual evening with
-            friends or a memorable date night, Brews & Bites offers a warm and
-            inviting ambiance that's perfect for any occasion. Join us in
-            savoring the finest brews and bites, and let the good times flow.
+            the taste buds. Whether you&apos;re looking for a casual evening
+            with friends or a memorable date night, Brews & Bites offers a warm
+            and inviting ambiance that&apos;s perfect for any occasion. Join us
+            in savoring the finest brews and bites, and let the good times flow.
           </p>
         </div>
       </section>
