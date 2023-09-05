@@ -35,7 +35,7 @@ const RotatingImage = () => {
     <img
       src="/images/plate.png"
       alt="Rotating Image"
-      className="h-60 w-60"
+      className="h-70 w-70"
       style={imageStyle}
     />
   );

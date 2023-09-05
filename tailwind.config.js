@@ -21,6 +21,9 @@ module.exports = {
         "dark-red": "rgb(186, 36, 41)",
         "dark-blue": "rgb(0, 125, 219)",
         "light-gray": "rgb(145, 144, 144)",
+        "pink-color": "#f2226e",
+        "orange-color": "#f29f05",
+        "dark-orange": "#d93b18",
       },
 
       backgroundImage: {
