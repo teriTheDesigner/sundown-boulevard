@@ -13,12 +13,24 @@
   --light-gray: rgb(145, 144, 144);
   --middle-blue: rgb(121, 163, 195);
   --light-blue: rgb(235, 241, 246);
+  --pink-color: #f2226e;
+  --orange-color: #f29f05;
+  --dark-orange: #d93b18;
 }
 
 body {
   background: var(--background);
+}
 
-  color: var(--dark-purple);
+.textGradient {
+  color: linear-gradient(
+    var(--dark-red),
+    var(--dark-orange),
+    var(--orange-color),
+    var(--dark-yellow),
+    var(--dark-blue),
+    var(--dark-purple)
+  );
 }
 
 .content-container {

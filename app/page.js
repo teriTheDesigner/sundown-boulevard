@@ -1,6 +1,7 @@
 "use client";
 
 import Slider from "./components/Slider";
+import RotatingImage from "./components/RotatingImage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -70,7 +71,7 @@ export default function Home() {
     });
   }
   return (
-    <main className=" content-container mx-auto flex flex-col gap-28 text-dark-purple">
+    <main className=" content-container  mx-auto flex flex-col gap-28 text-dark-purple">
       <section className="h- grid grid-cols-7 gap-4 ">
         {modalVisible && (
           <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
@@ -140,7 +141,7 @@ export default function Home() {
           </div>
         )}
         <section className="col-start-1 col-end-8 grid grid-cols-2 gap-4">
-          <h1 className="   col-start-1 col-end-2 mt-24 place-self-center text-9xl opacity-20">
+          <h1 className="   textGradient col-start-1 col-end-2 mt-24 place-self-center text-9xl opacity-20">
             BREWS <br /> &<br /> BITES
           </h1>
           <div className="col-start-2 col-end-3 flex  flex-col place-items-center ">
@@ -246,6 +247,7 @@ export default function Home() {
         </div>
       </section>
 
+      <RotatingImage></RotatingImage>
       <section
         id="about"
         data-aos="fade-up"

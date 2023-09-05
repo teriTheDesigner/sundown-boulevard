@@ -22,6 +22,7 @@ module.exports = {
         "dark-blue": "rgb(0, 125, 219)",
         "light-gray": "rgb(145, 144, 144)",
       },
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
