@@ -3,13 +3,13 @@ import Image from "next/image";
 import logo from "@/public/images/beach.png";
 export default function Nav() {
   return (
-    <header className=" mb-8 flex h-20 items-center justify-around ">
+    <header className=" mb-20  flex h-28 items-center justify-around bg-dark-purple/10 ">
       <Link href="/#">
         <Image width="40" height="40" src={logo} alt="logo"></Image>
       </Link>
       <nav className=" flex gap-8 text-sm ">
         <li className="list-none">
-          <a href="#menu" className="  underline-offset-8 hover:underline">
+          <a href="#menu" className=" underline-offset-8 hover:underline">
             MENU
           </a>
         </li>

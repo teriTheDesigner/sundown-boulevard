@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import localFont from "next/font/local";
+import Footer from "./components/Footer";
 
 import Nav from "@/app/components/Nav.js";
 import ContextProvider from "./Context";
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
           <Nav></Nav>
 
           {children}
+          <Footer></Footer>
         </body>
       </ContextProvider>
     </html>

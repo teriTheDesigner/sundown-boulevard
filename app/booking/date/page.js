@@ -11,7 +11,8 @@ import Stepper from "@/app/components/Stepper";
 export default function Date() {
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
-  const [error, setError] = useState();
+  const [emailError, setEmailError] = useState();
+  const [nameError, setNameError] = useState();
 
   useEffect(() => {
     const inputElement = document.getElementById("dateTimeInput");
@@ -72,25 +73,42 @@ export default function Date() {
       payload: e.target.value,
     });
   };
+
+  const addName = (e) => {
+    dispatch({
+      type: "ADD_NAME",
+      payload: e.target.value,
+    });
+  };
+
   function storeData() {
-    console.log(customer);
     localStorage.setItem(customer.email, JSON.stringify(customer));
   }
 
-  const handleBlur = (value) => {
-    console.log("handle blur");
+  const handleEmailBlur = (value) => {
     if (value.trim() === "") {
-      setError("Email is required.");
+      setEmailError("Email is required.");
     } else if (!value.includes("@")) {
-      setError("Please enter a valid email.");
+      setEmailError("Please enter a valid email.");
     } else {
-      setError("");
+      setEmailError("");
     }
   };
 
-  const handleFocus = () => {
-    console.log("handle focus");
-    setError("");
+  const handleEmailFocus = () => {
+    setEmailError("");
+  };
+
+  const handleNameBlur = (value) => {
+    if (value.trim() === "") {
+      setNameError("Name is required.");
+    } else {
+      setNameError("");
+    }
+  };
+
+  const handleNameFocus = () => {
+    setNameError("");
   };
 
   return (
@@ -107,8 +125,8 @@ export default function Date() {
                   type="button"
                   className={`${
                     customer.people <= 1
-                      ? " bg-light-gray text-black  h-8 w-6"
-                      : "bg-white   text-black h-8 w-6 "
+                      ? " h-8 w-6  bg-gray-300 text-black"
+                      : "h-8   w-6 bg-white text-black "
                   }`}
                   onClick={removeGuest}
                   disabled={customer.people <= 1 ? true : false}
@@ -120,8 +138,8 @@ export default function Date() {
                   disabled={customer.people >= 10 ? true : false}
                   className={`${
                     customer.people >= 10
-                      ? " bg-gray-500 text-black h-8 w-6"
-                      : "bg-white text-black h-8 w-6"
+                      ? " h-8 w-6 bg-gray-300 text-black"
+                      : "h-8 w-6 bg-white text-black"
                   }`}
                   type="button"
                   onClick={addGuest}
@@ -131,19 +149,37 @@ export default function Date() {
               </div>
             </div>
             {customer.previousCustomer ? null : (
-              <div>
+              <div className="flex flex-col gap-4">
                 <label className=" flex flex-col gap-2 text-sm">
-                  Your email
+                  Your Name
                   <input
-                    className="  text-black h-12 w-64 rounded-lg p-2"
+                    onBlur={(e) => handleNameBlur(e.target.value)}
+                    onFocus={() => handleNameFocus()}
+                    onChange={addName}
+                    placeholder="John Smith"
+                    type="name"
+                    className=" h-12 w-64 rounded-lg p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
+                  ></input>
+                  {nameError && (
+                    <span className="text-xs text-dark-red opacity-80">
+                      {nameError}
+                    </span>
+                  )}
+                </label>
+                <label className=" flex flex-col gap-2 text-sm">
+                  Your Email
+                  <input
+                    className=" h-12 w-64 rounded-lg p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
                     type="email"
                     placeholder="your@email.com"
                     onChange={addEmail}
-                    onBlur={(e) => handleBlur(e.target.value)}
-                    onFocus={() => handleFocus()}
+                    onBlur={(e) => handleEmailBlur(e.target.value)}
+                    onFocus={() => handleEmailFocus()}
                   ></input>
-                  {error && (
-                    <span className="text-dark-red opacity-80">{error}</span>
+                  {emailError && (
+                    <span className="text-xs text-dark-red opacity-80">
+                      {emailError}
+                    </span>
                   )}
                 </label>
               </div>
@@ -153,13 +189,13 @@ export default function Date() {
             Pick a date and time for your booking:
             <input
               id="dateTimeInput"
-              className=" text-black h-12 w-64 rounded-lg p-2 text-sm"
+              className="h-12 w-64 rounded-lg p-2 text-sm font-thin  text-dark-purple  focus:outline-dark-purple/70"
               name="booking"
               placeholder="YYYY-MM-DD"
             />
           </label>
         </form>
-        <div className=" border-white fixed right-24 flex flex-col gap-4 border-l pl-4 text-sm">
+        <div className=" fixed right-24 flex flex-col gap-4 border-l border-dark-purple pl-4 text-sm">
           <h5>Your Order</h5>
           <div className="flex flex-col gap-2  ">
             <p className="text-xs">Guests:</p>
@@ -170,7 +206,7 @@ export default function Date() {
           <Link href="/booking/receipt">
             <button
               onClick={storeData}
-              className="border-white h-8  w-28 rounded-lg border-2 text-xs"
+              className="h-8 w-28  rounded-lg border-2 border-dark-purple text-xs  hover:bg-dark-purple hover:text-background-white"
               disabled={customer.drinks.length ? false : true}
             >
               {customer.previousCustomer ? "UPDATE ORDER" : "ORDER"}

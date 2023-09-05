@@ -11,6 +11,10 @@ export default function Booking() {
   const [meal, setMeal] = useState();
   const dispatch = useContext(DispatchContext);
   const { customer } = useContext(Context);
+  const [color, setColor] = useState();
+  const bgStyle = {
+    backgroundColor: color,
+  };
 
   const addMeal = (mealName, mealId, mealCategory, mealImg) => {
     console.log("adding", mealName, mealId, mealCategory, mealImg, "to Meals");
@@ -53,23 +57,21 @@ export default function Booking() {
     }
   }
 
+  function RandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    const BgColor = `rgb(${r}, ${g}, ${b}) `;
+
+    setColor(BgColor);
+  }
+
   return (
     <div
       className={`content-container mx-auto flex flex-col justify-around gap-6`}
+      style={bgStyle}
     >
-      {/* <div className="mb-8 flex w-1/2 justify-between text-xs text-gray-300 ">
-        <Link href="/booking">
-          <p>1. Meal</p>
-        </Link>
-
-        <Link href="/booking/drinks">
-          <p>2. Drinks</p>
-        </Link>
-        <Link href="/booking/date">
-          <p>3. Date</p>
-        </Link>
-      </div> */}
-
       <Stepper></Stepper>
 
       <div className="flex justify-between">
@@ -102,13 +104,13 @@ export default function Booking() {
 
           <button
             onClick={changeMeal}
-            className="border-white h-8  w-32 place-self-end rounded-lg border-2 text-xs"
+            className="h-8 w-32  place-self-end rounded-lg border-2 border-dark-purple text-xs"
           >
             NEW MEAL
           </button>
         </div>
 
-        <div className="border-white fixed right-24 flex flex-col gap-4 border-l pl-4 text-sm">
+        <div className="fixed right-24 flex flex-col gap-4 border-l  border-dark-purple pl-4 text-sm">
           <h5>Your Order</h5>
           <Basket></Basket>
 
@@ -117,9 +119,9 @@ export default function Booking() {
               onClick={() =>
                 addMeal(meal.mealName, meal.mealId, meal.category, meal.mealImg)
               }
-              className="h-8 w-24 rounded-lg  border-2 border-dark-purple text-xs text-dark-purple"
+              className="h-8 w-24 rounded-lg  border-2 border-dark-purple text-xs text-dark-purple  hover:bg-dark-purple hover:text-background-white"
             >
-              Continue
+              NEXT
             </button>
           </Link>
           {customer.meal ? null : <span>Please choose a meal.</span>}

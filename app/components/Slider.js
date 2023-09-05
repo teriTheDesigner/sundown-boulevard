@@ -1,14 +1,14 @@
 "use client";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import "./Stepper.module.css";
+import "./Slider.module.css";
 import { useState } from "react";
 
 const images = [
-  "/images/gaby-yerden-lDyreMNIo5A-unsplash.jpg",
-  "/images/edward-howell-VXIpXxpZ5ms-unsplash.jpg",
-  "/images/gaby-yerden-lDyreMNIo5A-unsplash.jpg",
-  "/images/olena-sergienko-JjGLEN7T8xI-unsplash.jpg",
+  "/images/elevate-7omeJVzcgTE-unsplash.jpg",
+  "/images/elevate-nYgy58eb9aw-unsplash.jpg",
+  "/images/elevate-snnhGYNqm44-unsplash.jpg",
+  "/images/fred-moon-0yqa0rMCsYk-unsplash.jpg",
 ];
 export default function Slider() {
   const [details, setDetails] = useState(null);

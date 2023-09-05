@@ -9,36 +9,18 @@
   --dark-yellow: rgb(255, 186, 73);
   --dark-red: rgb(186, 36, 41);
   --dark-blue: rgb(0, 125, 219);
+  --darker-blue: rgb(38, 99, 145);
   --light-gray: rgb(145, 144, 144);
+  --middle-blue: rgb(121, 163, 195);
+  --light-blue: rgb(235, 241, 246);
 }
 
 body {
   background: var(--background);
+
   color: var(--dark-purple);
 }
 
 .content-container {
   max-width: 1000px;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-}
-
-.modal {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }

@@ -1,5 +1,4 @@
 "use client";
-
 import { useContext } from "react";
 import { DispatchContext, Context } from "../../Context";
 import Image from "next/image";
@@ -44,38 +43,46 @@ export default function Drinks() {
       <Stepper></Stepper>
 
       <div className="flex justify-between">
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-10">
           {drinks
-            ? drinks.map((drink) => (
-                <div
-                  className=" flex h-60 w-48 cursor-pointer flex-col justify-evenly"
-                  onClick={() => addDrinks(drink.name)}
-                  key={drink.id}
-                >
-                  <Image
-                    alt={drink.name}
-                    width="50"
-                    height="50"
-                    src={drink.image_url}
-                  ></Image>
-                  <p className="text-sm">{drink.name}</p>
-                  <p className="text-xs">
-                    <i>{drink.tagline}</i>
-                  </p>
-                </div>
-              ))
+            ? drinks.map((drink) => {
+                const isSelected = customer.drinks.includes(drink.name);
+
+                return (
+                  <div
+                    className={`flex h-80 w-60 cursor-pointer flex-col place-items-center justify-between rounded-lg bg-white p-4 ${
+                      isSelected ? "border-2 border-dark-purple/60" : ""
+                    }`}
+                    onClick={() => addDrinks(drink.name)}
+                    key={drink.id}
+                  >
+                    <Image
+                      alt={drink.name}
+                      width="50"
+                      height="50"
+                      src={drink.image_url}
+                    ></Image>
+                    <div className="flex h-20 flex-col gap-4 border-t border-dark-purple">
+                      <p className="pt-2 text-sm">{drink.name}</p>
+                      <p className="text-xs">
+                        <i>{drink.tagline}</i>
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
             : null}
         </div>
-        <div className=" border-white fixed right-24 flex flex-col gap-4 border-l pl-4 text-sm">
+        <div className=" fixed right-24 flex flex-col gap-4 border-l border-dark-purple pl-4 text-sm">
           <h5>Your Order</h5>
 
           <Basket></Basket>
 
           <Link href="/booking/date">
             <button
-              className={` h-8 w-24 rounded-lg border-2 text-xs ${
+              className={` h-8 w-24 rounded-lg border-2 text-xs  ${
                 customer.drinks.length
-                  ? "border-dark-purple  text-dark-purple"
+                  ? "border-dark-purple  text-dark-purple  hover:bg-dark-purple hover:text-background-white"
                   : "border-light-gray text-light-gray"
               }`}
               onClick={() => changeStep("date")}

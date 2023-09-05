@@ -14,9 +14,18 @@ export default function Receipt() {
     });
   }
   return (
-    <div className="content-container  mx-auto">
-      <div className="  flex w-1/3 flex-col gap-4 bg-white  p-4 text-black">
-        <h3>We are looking forward to your visit!</h3>
+    <div className="content-container mx-auto flex items-center  justify-center">
+      <div className=" flex  w-2/5 flex-col gap-6 border-l border-dark-purple  p-8 text-dark-purple">
+        <h1 className="text-xl">Your Booking is complete!</h1>
+
+        <p className="text-xs">
+          Thank you for your order <i>{customer.name}</i> ,we are looking
+          forward to your visit!
+        </p>
+        <p className="text-xs">
+          We sent an email confirmation to this address: {customer.email}
+        </p>
+
         <p>Order Details:</p>
         <div className="flex flex-col gap-2">
           <p className="text-xs">Date:</p>
@@ -44,7 +53,12 @@ export default function Receipt() {
         </div>
 
         <Link href="/">
-          <button onClick={clearBasket}>HOME</button>
+          <button
+            className="h-8 w-24  rounded-lg border-2 border-dark-purple  text-xs  text-dark-purple hover:bg-dark-purple hover:text-background-white"
+            onClick={clearBasket}
+          >
+            HOME
+          </button>
         </Link>
       </div>
     </div>
