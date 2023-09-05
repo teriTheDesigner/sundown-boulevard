@@ -3,6 +3,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import "./Slider.module.css";
 import { useState } from "react";
+import Image from "next/image";
 
 const images = [
   "/images/elevate-7omeJVzcgTE-unsplash.jpg",
@@ -36,7 +37,7 @@ export default function Slider() {
       {images.map((src, idx) => (
         <div key={idx} className="keen-slider__slide zoom-out__slide">
           <div style={scaleStyle(idx)}>
-            <img alt={src} src={src} />
+            <Image alt={src} src={src} width={500} height={300}></Image>
           </div>
         </div>
       ))}
