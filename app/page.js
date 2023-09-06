@@ -121,8 +121,8 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-6 text-center ">
-                <h1 className="mb-2 text-lg font-bold">Email Not Found</h1>
+              <div className="flex flex-col items-center justify-center gap-6 p-20 text-center ">
+                <h1 className="mb-2 text-lg ">EMAIL NOT FOUND</h1>
                 <p className="text-xs">
                   We couldn&apos;t locate your email in our records. Please make
                   sure you have entered the correct email address or consider
@@ -143,7 +143,7 @@ export default function Home() {
         <div className="  content-container mx-auto grid grid-cols-12 gap-2 ">
           <div className="col-start-1 col-end-5 flex  flex-col justify-between ">
             <h1 className=" text-9xl opacity-60">BREWS</h1>
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col ">
               <p className="  opacity-60">
                 Welcome to Brews & Bites, where the love for exceptional flavors
                 and good times come together.
@@ -252,6 +252,18 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section data-aos="fade-up" data-aos-duration="700" className="  pt-32 ">
+        <div className=" content-container mx-auto grid grid-cols-12 place-items-center gap-2">
+          {" "}
+          <div className="col-start-1 col-end-13 flex flex-col   place-items-center">
+            <h1 className="  top-4/5  absolute text-8xl opacity-20">BROWSE</h1>
+            <p className="pt-8 text-xl">THROUGH OUR FAVORITES</p>
+          </div>
+          <div className=" col-start-1 col-end-13 mt-20 w-1/2 ">
+            <Slider></Slider>
+          </div>
+        </div>
+      </section>
       <section
         id="about"
         data-aos="fade-up"
@@ -287,23 +299,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <section
-        data-aos="fade-up"
-        data-aos-duration="700"
-        className=" flex flex-col  place-items-center gap-20"
-      >
-        <div className="flex flex-col   place-items-center">
-          <h1 className="  top-4/5  absolute text-8xl opacity-20">BROWSE</h1>
-          <p className="pt-8 text-xl">THROUGH OUR FAVORITES</p>
-        </div>
-        <div className="  w-3/4">
-          {" "}
-          <Slider></Slider>
-        </div>
-      </section>
-
-   
-        */}
     </main>
   );
 }

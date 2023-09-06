@@ -14,16 +14,16 @@ export default function Receipt() {
     });
   }
   return (
-    <div className="content-container mx-auto flex items-center  justify-center">
-      <div className=" flex  w-2/5 flex-col gap-6 border-l border-dark-purple  p-8 text-dark-purple">
-        <h1 className="text-xl">Your Booking is complete!</h1>
+    <div className="content-container mx-auto flex items-center justify-center pb-20  pt-8">
+      <div className=" flex  w-1/2 flex-col gap-4 border-l border-dark-purple  p-8 text-dark-purple">
+        <h1 className="text-xl">YOUR BOOKING IS COMPLETE!</h1>
 
         <p className="text-xs">
           Thank you for your order <i>{customer.name}</i> ,we are looking
           forward to your visit!
         </p>
         <p className="text-xs">
-          We sent an email confirmation to this address: {customer.email}
+          We sent an email confirmation to this address: <i>{customer.email}</i>
         </p>
 
         <p>Order Details:</p>

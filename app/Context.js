@@ -121,6 +121,7 @@ const formReducer = (state, action) => {
           ...state.customer,
           email: "",
           meal: "",
+          name: "",
           mealId: "",
           mealImg: "",
           mealCategory: "",
@@ -160,6 +161,7 @@ const formReducer = (state, action) => {
           mealImg: customer?.mealImg,
           mealId: customer?.mealId,
           previousCustomer: true,
+          name: customer?.name,
         },
       };
 

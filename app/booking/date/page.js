@@ -112,9 +112,9 @@ export default function Date() {
   };
 
   return (
-    <div className="content-container mx-auto ">
+    <div className="content-container mx-auto pb-32 pt-16">
       <Stepper></Stepper>
-      <div className="flex justify-between">
+      <div className="grid grid-cols-12 gap-2 pt-6">
         {" "}
         <form className="flex gap-20">
           <div className="flex flex-col gap-20">
@@ -126,7 +126,7 @@ export default function Date() {
                   className={`${
                     customer.people <= 1
                       ? " h-8 w-6  bg-gray-300 text-black"
-                      : "h-8   w-6 bg-white text-black "
+                      : "h-8   w-6 border-2 border-dark-purple/20 bg-white text-black "
                   }`}
                   onClick={removeGuest}
                   disabled={customer.people <= 1 ? true : false}
@@ -139,7 +139,7 @@ export default function Date() {
                   className={`${
                     customer.people >= 10
                       ? " h-8 w-6 bg-gray-300 text-black"
-                      : "h-8 w-6 bg-white text-black"
+                      : "h-8 w-6 border-2 border-dark-purple/20 bg-white text-black"
                   }`}
                   type="button"
                   onClick={addGuest}
@@ -158,7 +158,7 @@ export default function Date() {
                     onChange={addName}
                     placeholder="John Smith"
                     type="name"
-                    className=" h-12 w-64 rounded-lg p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
+                    className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
                   ></input>
                   {nameError && (
                     <span className="text-xs text-dark-red opacity-80">
@@ -169,7 +169,7 @@ export default function Date() {
                 <label className=" flex flex-col gap-2 text-sm">
                   Your Email
                   <input
-                    className=" h-12 w-64 rounded-lg p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
+                    className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
                     type="email"
                     placeholder="your@email.com"
                     onChange={addEmail}
@@ -189,14 +189,14 @@ export default function Date() {
             Pick a date and time for your booking:
             <input
               id="dateTimeInput"
-              className="h-12 w-64 rounded-lg p-2 text-sm font-thin  text-dark-purple  focus:outline-dark-purple/70"
+              className="h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 text-sm font-thin  text-dark-purple  focus:outline-dark-purple/70"
               name="booking"
               placeholder="YYYY-MM-DD"
             />
           </label>
         </form>
-        <div className=" fixed right-24 flex flex-col gap-4 border-l border-dark-purple pl-4 text-sm">
-          <h5>Your Order</h5>
+        <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
+          <h5>YOUR ORDER</h5>
           <div className="flex flex-col gap-2  ">
             <p className="text-xs">Guests:</p>
             <p className="text-xs"> {customer.people}</p>
@@ -206,12 +206,25 @@ export default function Date() {
           <Link href="/booking/receipt">
             <button
               onClick={storeData}
-              className="h-8 w-28  rounded-lg border-2 border-dark-purple text-xs  hover:bg-dark-purple hover:text-background-white"
-              disabled={customer.drinks.length ? false : true}
+              className={`h-8 w-32  rounded-lg border-2 ${
+                customer.name && customer.email && customer.date
+                  ? "border-dark-blue  text-dark-blue  hover:bg-dark-blue hover:text-background-white"
+                  : "border-light-gray text-light-gray"
+              }`}
+              disabled={
+                customer.name && customer.email && customer.date.date
+                  ? false
+                  : true
+              }
             >
               {customer.previousCustomer ? "UPDATE ORDER" : "ORDER"}
             </button>
           </Link>
+          {customer.name && customer.email && customer.date.date ? null : (
+            <p className=" text-xs text-light-gray">
+              Please fill all the information to continue.
+            </p>
+          )}
         </div>
       </div>
     </div>

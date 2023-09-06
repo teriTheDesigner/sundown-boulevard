@@ -39,19 +39,21 @@ export default function Drinks() {
   }
 
   return (
-    <div className="content-container mx-auto flex flex-col gap-4 ">
+    <div className=" content-container mx-auto  pb-32 pt-16 ">
       <Stepper></Stepper>
 
-      <div className="flex justify-between">
-        <div className="grid grid-cols-3 gap-10">
+      <div className=" grid grid-cols-12 gap-2 pt-6">
+        <div className="col-start-1 col-end-10 grid grid-cols-3 gap-2">
           {drinks
             ? drinks.map((drink) => {
                 const isSelected = customer.drinks.includes(drink.name);
 
                 return (
                   <div
-                    className={`flex h-80 w-60 cursor-pointer flex-col place-items-center justify-between rounded-lg bg-white p-4 ${
-                      isSelected ? "border-2 border-dark-purple/60" : ""
+                    className={` flex h-80 w-60 cursor-pointer flex-col place-items-center justify-between  rounded-lg bg-white p-4 ${
+                      isSelected
+                        ? "border-2 border-dark-purple/80"
+                        : "border-2 border-light-blue"
                     }`}
                     onClick={() => addDrinks(drink.name)}
                     key={drink.id}
@@ -73,8 +75,8 @@ export default function Drinks() {
               })
             : null}
         </div>
-        <div className=" fixed right-24 flex flex-col gap-4 border-l border-dark-purple pl-4 text-sm">
-          <h5>Your Order</h5>
+        <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
+          <h5>YOUR ORDER</h5>
 
           <Basket></Basket>
 
@@ -82,7 +84,7 @@ export default function Drinks() {
             <button
               className={` h-8 w-24 rounded-lg border-2 text-xs  ${
                 customer.drinks.length
-                  ? "border-dark-purple  text-dark-purple  hover:bg-dark-purple hover:text-background-white"
+                  ? "border-dark-blue  text-dark-blue  hover:bg-dark-blue hover:text-background-white"
                   : "border-light-gray text-light-gray"
               }`}
               onClick={() => changeStep("date")}
@@ -92,7 +94,7 @@ export default function Drinks() {
             </button>
           </Link>
           {customer.drinks.length ? null : (
-            <p className=" max-w-[60%] text-xs">
+            <p className=" text-xs text-light-gray">
               Please choose a drink to continue.
             </p>
           )}

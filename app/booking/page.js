@@ -17,7 +17,7 @@ export default function Booking() {
   };
 
   const addMeal = (mealName, mealId, mealCategory, mealImg) => {
-    console.log("adding", mealName, mealId, mealCategory, mealImg, "to Meals");
+    console.log("adding", mealName, "to Meals");
     dispatch({
       type: "UPDATE_MEAL",
       payload: { mealName, mealId, mealCategory, mealImg },
@@ -57,29 +57,14 @@ export default function Booking() {
     }
   }
 
-  function RandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-
-    const BgColor = `rgb(${r}, ${g}, ${b}) `;
-
-    setColor(BgColor);
-  }
-
   return (
-    <div
-      className={`content-container mx-auto flex flex-col justify-around gap-6`}
-      style={bgStyle}
-    >
+    <div className=" content-container mx-auto pb-32 pt-16 ">
       <Stepper></Stepper>
 
-      <div className="flex justify-between">
-        <div className="flex w-1/3 flex-col items-center gap-4 ">
+      <div className="grid grid-cols-12 gap-2  pt-6  ">
+        <div className="col-start-1 col-end-8 flex   gap-12 ">
           {customer.meal ? (
             <>
-              <h2>{customer.meal}</h2>
-              <p className="text-sm">Category: {customer.mealCategory}</p>
               <Image
                 width="150"
                 height="150"
@@ -87,11 +72,19 @@ export default function Booking() {
                 src={customer.mealImg}
                 alt="mealImg"
               />
+              <div className="flex flex-col  gap-4">
+                <h2>{customer.meal.toUpperCase()}</h2>
+                <p className="text-sm">Category: {customer.mealCategory}</p>
+                <button
+                  onClick={changeMeal}
+                  className="h-8 w-32 rounded-lg border-2  border-dark-blue bg-white  text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+                >
+                  NEW MEAL
+                </button>
+              </div>
             </>
           ) : meal ? (
             <>
-              <h2>{meal.mealName}</h2>
-              <p className="text-sm">Category: {meal.category}</p>
               <Image
                 width="150"
                 height="150"
@@ -99,19 +92,23 @@ export default function Booking() {
                 src={meal.mealImg}
                 alt="mealImg"
               />
+              <div className="flex flex-col gap-4">
+                <h2>{meal.mealName.toUpperCase()}</h2>
+                <p className="text-sm">Category: {meal.category}</p>
+
+                <button
+                  onClick={changeMeal}
+                  className="h-8 w-32 rounded-lg border-2  border-dark-blue bg-white  text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+                >
+                  NEW MEAL
+                </button>
+              </div>
             </>
           ) : null}
-
-          <button
-            onClick={changeMeal}
-            className="h-8 w-32  place-self-end rounded-lg border-2 border-dark-purple text-xs"
-          >
-            NEW MEAL
-          </button>
         </div>
 
-        <div className="fixed right-24 flex flex-col gap-4 border-l  border-dark-purple pl-4 text-sm">
-          <h5>Your Order</h5>
+        <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
+          <h5>YOUR ORDER</h5>
           <Basket></Basket>
 
           <Link href="/booking/drinks">
@@ -119,12 +116,11 @@ export default function Booking() {
               onClick={() =>
                 addMeal(meal.mealName, meal.mealId, meal.category, meal.mealImg)
               }
-              className="h-8 w-24 rounded-lg  border-2 border-dark-purple text-xs text-dark-purple  hover:bg-dark-purple hover:text-background-white"
+              className="h-8 w-24 rounded-lg  border-2  border-dark-blue bg-white  text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
             >
               NEXT
             </button>
           </Link>
-          {customer.meal ? null : <span>Please choose a meal.</span>}
         </div>
       </div>
     </div>

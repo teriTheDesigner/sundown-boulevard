@@ -16,7 +16,7 @@ export default function Nav() {
   }
   return (
     <header className="bg-white ">
-      <div className="  content-container mx-auto flex h-28 items-center justify-around ">
+      <div className="  content-container mx-auto flex h-20 items-center justify-around ">
         <Link href="/#">
           <Image width="50" height="50" src={logo} alt="logo"></Image>
         </Link>
@@ -44,7 +44,7 @@ export default function Nav() {
         </nav>
         <button
           onClick={changeStep}
-          className=" h-12 w-36 rounded-lg border-2  border-dark-red bg-dark-red text-sm text-white "
+          className=" h-8 w-28 rounded-lg border-2  border-dark-red bg-dark-red text-sm text-white "
         >
           BOOK
         </button>
