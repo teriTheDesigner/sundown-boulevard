@@ -60,6 +60,7 @@ export default function Drinks() {
                   >
                     <Image
                       alt={drink.name}
+                      className="m-auto"
                       width="50"
                       height="50"
                       src={drink.image_url}

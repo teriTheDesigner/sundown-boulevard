@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${helvetica.variable} font-helvetica `}>
       <ContextProvider>
-        <body className="">
+        <body className="flex min-h-screen flex-col">
           <Nav></Nav>
 
           {children}

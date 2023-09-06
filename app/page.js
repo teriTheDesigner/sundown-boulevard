@@ -139,7 +139,7 @@ export default function Home() {
           </div>
         </div>
       )}
-      <section className=" h-screen bg-black  pb-32 pt-32 text-white ">
+      <section className="  bg-black  pb-32 pt-32 text-white ">
         <div className="  content-container mx-auto grid grid-cols-12 gap-2 ">
           <div className="col-start-1 col-end-5 flex  flex-col justify-between ">
             <h1 className=" text-9xl opacity-60">BREWS</h1>
