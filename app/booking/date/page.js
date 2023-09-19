@@ -93,15 +93,26 @@ export default function Date() {
   }
   
   function storeData() {
-    // Get the next ID to use as the key
-    const id = getNextId();
+    let id;
+  
+    // Check if there's an updatingOrder in localStorage
+    const updatingOrderId = localStorage.getItem('updatingOrder');
+  
+    // If there's an updatingOrderId and it's valid, use it
+    if (updatingOrderId && localStorage.getItem(updatingOrderId)) {
+      id = updatingOrderId;
+      localStorage.removeItem('updatingOrder'); // remove it after using so it doesn't affect future orders
+    } else {
+      // Else, use the next auto-incremented ID
+      id = getNextId();
+      // Store this ID back to localStorage for the future
+      localStorage.setItem("lastId", id.toString());
+    }
     
-    // Stores the ID back to localStorage for the future
-    localStorage.setItem("lastId", id.toString());
-    
-    // Added email to the customer object and save it with the new ID
+    // Save the order data with the ID in localstorage
     localStorage.setItem(id.toString(), JSON.stringify({...customer, email: customer.email}));
   }
+  
 
   
 
