@@ -81,9 +81,32 @@ export default function Date() {
     });
   };
 
-  function storeData() {
+ /* function storeData() {
     localStorage.setItem(customer.email, JSON.stringify(customer));
+  }*/
+
+  function getNextId() {
+    // Fetch the last used ID from localStorage
+    const lastId = parseInt(localStorage.getItem("lastId") || "0", 10);
+  
+    return lastId + 1;
   }
+  
+  function storeData() {
+    // Get the next ID to use as the key
+    const id = getNextId();
+    
+    // Stores the ID back to localStorage for the future
+    localStorage.setItem("lastId", id.toString());
+    
+    // Added email to the customer object and save it with the new ID
+    localStorage.setItem(id.toString(), JSON.stringify({...customer, email: customer.email}));
+  }
+
+  
+
+
+
 
   const handleEmailBlur = (value) => {
     if (value.trim() === "") {
