@@ -26,10 +26,44 @@ export default function Home() {
   function getEmail(e) {
     setEmail(e.target.value);
   }
-  function findOrder() {
+  /*function findOrder() {
     setModalVisible(true);
     setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
     console.log("finding order");
+  }*/
+
+  // email search
+  // Changes in logic to get all orders with the specified email
+  function findOrder() {
+    setModalVisible(true);
+
+    // An array to store the matched customers
+    const matchedCustomers = [];
+
+    // Iterate over all keys in localStorage.
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const customer = JSON.parse(localStorage.getItem(key));
+
+      // Check if input email matches the provided email
+      if (customer && customer.email === email) {
+        matchedCustomers.push({
+          ...customer,
+          id: key, // added the ID (which is the key in localStorage) to the customer object
+        });
+      }
+    }
+
+    setPreviousCustomer(matchedCustomers);
+    console.log("finding order");
+  }
+
+  function handleUpdateOrder(customer) {
+    updateCustomer(customer);
+    dispatch({
+      type: "CHANGE_STEP",
+      payload: "meal",
+    });
   }
 
   useEffect(() => {
@@ -43,10 +77,10 @@ export default function Home() {
     }
   }, [previousCustomer]);
 
-  function updateCustomer() {
+  function updateCustomer(customer) {
     dispatch({
       type: "UPDATE_CUSTOMER",
-      payload: previousCustomer,
+      payload: customer,
     });
   }
 
@@ -72,7 +106,7 @@ export default function Home() {
   }
   return (
     <main className="  flex flex-col ">
-      {modalVisible && (
+      {/* {modalVisible && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="  flex  w-1/2 bg-white   text-dark-purple shadow-md">
             {previousCustomer ? (
@@ -120,16 +154,48 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
+            ) : ( */}
+      {modalVisible && (
+        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+          <div className="flex w-1/2 bg-white text-dark-purple shadow-md">
+            {previousCustomer && previousCustomer.length ? (
+              <div className="flex w-2/3 flex-col gap-4 p-20">
+                <h1 className="text-xl">YOUR ORDERS</h1>
+                {previousCustomer.map((customer) => (
+                  <div key={customer.id}>
+                    <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
+                      <p className="text-sm">Email:</p>
+                      <p className="text-xs">{customer.email}</p>
+                      <p className="text-sm">ID:</p>
+                      <p className="text-xs">{customer.id}</p>
+                    </div>
+                    <Link href="/booking">
+                      <button
+                        onClick={() => handleUpdateOrder(customer)}
+                        className="h-8 w-28 rounded-lg border-2 border-black bg-dark-purple text-xs text-white "
+                      >
+                        UPDATE ORDER
+                      </button>
+                    </Link>
+                  </div>
+                ))}
+                <button
+                  className="h-8 w-24 rounded-lg border-2 border-gray-300 text-xs text-dark-purple"
+                  onClick={hideModal}
+                >
+                  CLOSE
+                </button>
+              </div>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-6 p-20 text-center ">
-                <h1 className="mb-2 text-lg ">EMAIL NOT FOUND</h1>
+              <div className="flex flex-col items-center justify-center gap-6 p-20 text-center">
+                <h1 className="mb-2 text-lg">EMAIL NOT FOUND</h1>
                 <p className="text-xs">
                   We couldn&apos;t locate your email in our records. Please make
                   sure you have entered the correct email address or consider
                   creating a new reservation.
                 </p>
                 <button
-                  className=" h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
+                  className="h-8 w-24 rounded-lg border-2 border-gray-300 text-xs text-black"
                   onClick={hideModal}
                 >
                   CLOSE
