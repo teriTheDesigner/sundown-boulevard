@@ -1,5 +1,3 @@
-"use client";
-
 import { useContext } from "react";
 import { Context, DispatchContext } from "../Context";
 
@@ -48,10 +46,12 @@ export default function Basket() {
         </div>
       )}
 
-      {customer.meal && (
+{customer.meals && customer.meals.length > 0 && (
         <div className="flex flex-col gap-2  border-t border-dark-purple pt-1 ">
-          <p className="text-xs">Meal: </p>
-          <p className="text-xs">{customer.meal}</p>
+          <p className="text-xs">Meals: </p>
+          {customer.meals.map((meal) => (
+            <p key={meal.mealId} className="text-xs">{meal.mealName}</p>
+          ))}
         </div>
       )}
 
