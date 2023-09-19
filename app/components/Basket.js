@@ -1,21 +1,37 @@
 "use client";
 
 import { useContext } from "react";
-
 import { Context, DispatchContext } from "../Context";
 
 export default function Basket() {
   const { customer } = useContext(Context);
   const dispatch = useContext(DispatchContext);
 
-  const removeDrink = (index) => {
-    dispatch({
-      type: "REMOVE_DRINK",
-      payload: index,
+  const separateDrinks = () => {
+    const drinkCount = {};
+
+    customer.drinks.forEach((drink) => {
+      drinkCount[drink] = (drinkCount[drink] || 0) + 1;
     });
 
-    console.log("Removing drink with index", index);
+    return Object.keys(drinkCount).map((drinkName) => ({
+      name: drinkName,
+      count: drinkCount[drinkName],
+    }));
   };
+
+  const removeDrink = (drinkName) => {
+    const index = customer.drinks.indexOf(drinkName);
+
+    if (index !== -1) {
+      dispatch({
+        type: "REMOVE_DRINK",
+        payload: index,
+      });
+      console.log("Removing drink", drinkName);
+    }
+  };
+
   return (
     <div className="flex w-40 flex-col gap-4">
       {customer.date.date && (
@@ -31,6 +47,7 @@ export default function Basket() {
           <p className="text-xs">{customer.date.time}</p>
         </div>
       )}
+
       {customer.meal && (
         <div className="flex flex-col gap-2  border-t border-dark-purple pt-1 ">
           <p className="text-xs">Meal: </p>
@@ -41,12 +58,11 @@ export default function Basket() {
       {customer.drinks.length > 0 && (
         <div className="flex flex-col gap-2 border-t  border-dark-purple pt-1 ">
           <p className="text-xs">Drinks: </p>
-          <div className=" text-xs">
-            {customer.drinks.map((drink, index) => (
-              <div key={index} className="flex gap-2 ">
-                {" "}
-                <button onClick={() => removeDrink(index)}>X</button>
-                <p>{drink}</p>
+          <div className="text-xs">
+            {separateDrinks().map((drinkObj) => (
+              <div key={drinkObj.name} className="flex gap-2">
+                <button onClick={() => removeDrink(drinkObj.name)}>X</button>
+                <p>{drinkObj.name} ({drinkObj.count})</p>
               </div>
             ))}
           </div>
