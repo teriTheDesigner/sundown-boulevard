@@ -3,6 +3,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ✨ Sundown Boulevard ✨
 
+
+
 🌱 Prerequisites for setup
 
 ```bash
@@ -24,9 +26,8 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-👏 Gotchas / Notes
+👏 Notes
 
-## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -48,9 +49,6 @@ The project is a booking flow for a restaurant where the user can choose a meal,
 
 
 🚀 Deployment
-
-
-## Deploy on Vercel
 
 https://sundown-boulevard-ten.vercel.app/
 
