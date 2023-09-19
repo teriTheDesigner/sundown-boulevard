@@ -59,12 +59,16 @@ export default function Home() {
   }
 
   function handleUpdateOrder(customer) {
+    // Saving the order id to local storage to the key updatingOrder
+    localStorage.setItem('updatingOrder', customer.id);
+    
     updateCustomer(customer);
     dispatch({
       type: "CHANGE_STEP",
       payload: "meal",
     });
-  }
+}
+
 
   useEffect(() => {
     AOS.init();
