@@ -73,17 +73,18 @@ export default function Booking() {
         return meals;
       }
 
-  const selectMeal = (meal) => {
-    dispatch({
-      type: "ADD_MEAL",
-      payload: {
-        mealName: meal.strMeal,
-        mealId: meal.idMeal,
-        mealCategory: meal.strCategory,
-        mealImg: meal.strMealThumb
-      },
-    });
-  };
+      const selectMeal = (meal) => {
+        dispatch({
+          type: "ADD_MEAL",
+          payload: {
+            mealName: meal.mealName,
+            mealId: meal.mealId,
+            mealCategory: meal.mealCategory,
+            mealImg: meal.mealImg
+          },
+        });
+    };
+    
 
   return (
     <div className="content-container mx-auto pb-32 pt-16">
