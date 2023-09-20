@@ -13,6 +13,9 @@ export default function Date() {
   const dispatch = useContext(DispatchContext);
   const [emailError, setEmailError] = useState();
   const [nameError, setNameError] = useState();
+  const [dateSelected, setDateSelected] = useState(false);
+  const TIME_SLOTS = ["16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"];
+
 
   useEffect(() => {
     const inputElement = document.getElementById("dateTimeInput");
@@ -24,7 +27,7 @@ export default function Date() {
         },
 
         minDate: "today",
-        enableTime: true,
+        enableTime: false,
         minTime: "16:00",
         maxTime: "22:30",
         time_24hr: true,
@@ -34,17 +37,15 @@ export default function Date() {
           },
         ],
 
-        onChange: (selectedDates, dateStr, instance) => {
-          const [date, time] = dateStr.split(" ");
-          console.log("Full date:", dateStr);
-          console.log("Selected date", date);
-          console.log("selected time", time);
-
+        onChange: (selectedDates, dateStr) => {
+          console.log("Selected date:", dateStr);
+          setDateSelected(true);  // set to true once a date is picked
           dispatch({
-            type: "UPDATE_DATE",
-            payload: { date, time },
+              type: "UPDATE_DATE",
+              payload: { date: dateStr, time: customer.date.time },
           });
-        },
+      },
+      
       };
       if (customer.date.date) {
         flatpickrOptions.defaultDate =
@@ -140,6 +141,17 @@ export default function Date() {
     setNameError("");
   };
 
+  function handleTimeSlotClick(selectedTime) {
+    dispatch({
+        type: "UPDATE_DATE",
+        payload: {
+            ...customer.date,
+            time: selectedTime
+        },
+    });
+}
+
+
   return (
     <div className="content-container mx-auto pb-32 pt-16">
       <Stepper></Stepper>
@@ -224,6 +236,27 @@ export default function Date() {
             />
           </label>
         </form>
+
+
+        {dateSelected && (
+    <div>
+        <p>Select a time:</p>
+        <ul>
+            {TIME_SLOTS.map((slot, idx) => (
+                <li key={idx}>
+                    <button 
+                        className="time-slot" 
+                        onClick={() => handleTimeSlotClick(slot)}
+                    >
+                        {slot}
+                    </button>
+                </li>
+            ))}
+        </ul>
+    </div>
+)}
+
+
         <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
           <h5>YOUR ORDER</h5>
           <div className="flex flex-col gap-2  ">
