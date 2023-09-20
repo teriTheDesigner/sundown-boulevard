@@ -27,9 +27,16 @@ export default function Booking() {
   }, []);*/
 
   useEffect(() => {
-    const fetchSavedMeals = () => {
     const updatingOrderId = localStorage.getItem('updatingOrder');
-    if (updatingOrderId) {
+    if (!updatingOrderId) {
+        dispatch({ type: "CLEAR_BASKET" });
+    }
+
+    const fetchSavedMeals = () => {
+      if (!updatingOrderId) {
+          return []; //no meals if nor oderid
+      }
+
       const savedOrder = JSON.parse(localStorage.getItem(updatingOrderId));
       if (savedOrder && savedOrder.meals) {
         const uniqueMealIds = new Set();
@@ -39,16 +46,16 @@ export default function Booking() {
           return notSeenBefore;
         });
       }
-    }
-    return [];
-  };
+      return [];
+    };
 
-  const savedMeals = fetchSavedMeals();
-  const mealsToFetch = 9 - savedMeals.length;
-  fetchMeals(mealsToFetch).then(fetchedMeals => {
-    setMealData([...savedMeals, ...fetchedMeals]);
-  });
+    const savedMeals = fetchSavedMeals();
+    const mealsToFetch = 9 - savedMeals.length;
+    fetchMeals(mealsToFetch).then(fetchedMeals => {
+        setMealData([...savedMeals, ...fetchedMeals]);
+    });
 }, []);
+
 
       async function fetchMeals(count) {
         const meals = [];
