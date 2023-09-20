@@ -249,9 +249,10 @@ function isTimeSlotTaken(date, time) {
               <p>Select a time:</p>
               <ul>
                 {TIME_SLOTS.map((slot, idx) => (
-                  <li key={idx}>
+                  <li key={idx} className="
+                  text-center">
                     <button 
-                      className={`time-slot ${isTimeSlotTaken(customer.date.date, slot) ? "bg-red-500" : ""}`}
+                      className={`time-slot ${isTimeSlotTaken(customer.date.date, slot) ? "bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 hover:bg-blue-500"}`}
                       onClick={() => handleTimeSlotClick(slot)}
                       disabled={isTimeSlotTaken(customer.date.date, slot)}
                     >
