@@ -164,7 +164,8 @@ function isTimeSlotTaken(date, time) {
       <Stepper></Stepper>
       <div className="grid grid-cols-12 gap-2 pt-6">
         {" "}
-        <form className="flex gap-20">
+        <div className="flex gap-20">
+        <form className="">
           <div className="flex flex-col gap-20">
             <div className="flex flex-col gap-6">
               <p>Number of guests</p>
@@ -247,23 +248,23 @@ function isTimeSlotTaken(date, time) {
           {dateSelected && (
             <div>
               <p>Select a time:</p>
-              <ul>
+              <div className="flex flex-wrap">
                 {TIME_SLOTS.map((slot, idx) => (
-                  <li key={idx} className="
+                  <div key={idx} className="
                   text-center">
                     <button 
-                      className={`time-slot time-slot px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 hover:bg-blue-500"}`}
+                      className={`time-slot px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 hover:bg-blue-500"}`}
                       onClick={() => handleTimeSlotClick(slot)}
                       disabled={isTimeSlotTaken(customer.date.date, slot)}
                     >
                       {slot}
                     </button>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
-
+</div>
 
 
         <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
