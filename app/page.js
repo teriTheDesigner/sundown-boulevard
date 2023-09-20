@@ -108,6 +108,11 @@ export default function Home() {
       payload: "meal",
     });
   }
+
+  function removeUpdatingOrder() {
+    localStorage.removeItem('updatingOrder');
+  }
+  
   return (
     <main className="  flex flex-col ">
       {/* {modalVisible && (
@@ -221,7 +226,10 @@ export default function Home() {
 
               <Link href="/booking">
                 <button
-                  onClick={changeStep}
+                  onClick={() => {
+                    changeStep();
+                    removeUpdatingOrder();
+                  }}
                   className="mt-12 h-12 w-44  rounded-lg border-2 border-dark-red bg-dark-red text-sm text-white hover:bg-dark-red hover:text-background-white"
                 >
                   BOOK A TABLE
