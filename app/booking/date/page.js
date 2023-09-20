@@ -237,7 +237,7 @@ export default function Date() {
           </label>
         </form>
 
-
+        <div>
         {dateSelected && (
     <div>
         <p>Select a time:</p>
@@ -255,6 +255,7 @@ export default function Date() {
         </ul>
     </div>
 )}
+</div>
 
 
         <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
