@@ -112,11 +112,6 @@ export default function Date() {
     // Save the order data with the ID in localstorage
     localStorage.setItem(id.toString(), JSON.stringify({...customer, email: customer.email}));
   }
-  
-
-  
-
-
 
 
   const handleEmailBlur = (value) => {
