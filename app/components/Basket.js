@@ -30,6 +30,34 @@ export default function Basket() {
     }
   };
 
+  const separateMeals = () => {
+    const mealCount = {};
+  
+    customer.meals.forEach((meal) => {
+      mealCount[meal.mealName] = (mealCount[meal.mealName] || 0) + 1;
+    });
+  
+    return Object.keys(mealCount).map((mealName) => ({
+      name: mealName,
+      count: mealCount[mealName],
+    }));
+  };
+
+  
+  const removeMeal = (mealName) => {
+    const mealToRemove = customer.meals.find(meal => meal.mealName === mealName);
+    
+    if (mealToRemove) {
+      dispatch({
+        type: "REMOVE_MEAL",
+        payload: { mealId: mealToRemove.mealId },
+      });
+      console.log("Removing one instance of meal", mealName);
+    }
+  };
+  
+  
+
   return (
     <div className="flex w-40 flex-col gap-4">
       {customer.date.date && (
@@ -46,14 +74,20 @@ export default function Basket() {
         </div>
       )}
 
-{customer.meals && customer.meals.length > 0 && (
+      {customer.meals && customer.meals.length > 0 && (
         <div className="flex flex-col gap-2  border-t border-dark-purple pt-1 ">
           <p className="text-xs">Meals: </p>
-          {customer.meals.map((meal) => (
-            <p key={meal.mealId} className="text-xs">{meal.mealName}</p>
-          ))}
+          <div className="text-xs">
+            {separateMeals().map((mealObj) => (
+              <div key={mealObj.name} className="flex gap-2">
+                <button onClick={() => removeMeal(mealObj.name)}>X</button>
+                <p>{mealObj.name} ({mealObj.count})</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
+
 
       {customer.drinks.length > 0 && (
         <div className="flex flex-col gap-2 border-t  border-dark-purple pt-1 ">
