@@ -14,7 +14,7 @@ export default function Date() {
   const [emailError, setEmailError] = useState();
   const [nameError, setNameError] = useState();
   const [dateSelected, setDateSelected] = useState(false);
-  const TIME_SLOTS = ["16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"];
+  const TIME_SLOTS = ["16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"];
 
 
   useEffect(() => {
@@ -151,6 +151,13 @@ export default function Date() {
     });
 }
 
+function isTimeSlotTaken(date, time) {
+  // Convert localStorage data to array of objects
+  const allStoredData = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)));
+
+  // .some() method to check if stored data matches
+  return allStoredData.some(savedData => savedData?.date?.date === date && savedData?.date?.time === time);
+}
 
   return (
     <div className="content-container mx-auto pb-32 pt-16">
@@ -237,25 +244,25 @@ export default function Date() {
           </label>
         </form>
 
-        <div>
-        {dateSelected && (
-    <div>
-        <p>Select a time:</p>
-        <ul>
-            {TIME_SLOTS.map((slot, idx) => (
-                <li key={idx}>
+          {dateSelected && (
+            <div>
+              <p>Select a time:</p>
+              <ul>
+                {TIME_SLOTS.map((slot, idx) => (
+                  <li key={idx}>
                     <button 
-                        className="time-slot" 
-                        onClick={() => handleTimeSlotClick(slot)}
+                      className={`time-slot ${isTimeSlotTaken(customer.date.date, slot) ? "bg-red-500" : ""}`}
+                      onClick={() => handleTimeSlotClick(slot)}
+                      disabled={isTimeSlotTaken(customer.date.date, slot)}
                     >
-                        {slot}
+                      {slot}
                     </button>
-                </li>
-            ))}
-        </ul>
-    </div>
-)}
-</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
 
 
         <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
