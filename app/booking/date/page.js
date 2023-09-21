@@ -254,7 +254,7 @@ function isTimeSlotTaken(date, time) {
                   <div key={idx} className="
                   text-center">
                     <button 
-                      className={`time-slot px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 hover:bg-blue-500"}`}
+                      className={`time-slot px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 focus:bg-blue-500 hover:bg-blue-500"}`}
                       onClick={() => handleTimeSlotClick(slot)}
                       disabled={isTimeSlotTaken(customer.date.date, slot)}
                     >

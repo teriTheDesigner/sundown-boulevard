@@ -52,7 +52,7 @@ export default function Basket() {
         type: "REMOVE_MEAL",
         payload: { mealId: mealToRemove.mealId },
       });
-      console.log("Removing one instance of meal", mealName);
+      console.log("Removing meal", mealName);
     }
   };
   
