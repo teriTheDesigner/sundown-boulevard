@@ -19,12 +19,6 @@ export default function Booking() {
     });
   }
 
-  //useEffect(() => {
-    /*if (!customer.meal) {
-      FetchMeal();
-    }*/
-   /* fetchMeals(9);
-  }, []);*/
 
   useEffect(() => {
     const updatingOrderId = localStorage.getItem('updatingOrder');
