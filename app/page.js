@@ -26,11 +26,7 @@ export default function Home() {
   function getEmail(e) {
     setEmail(e.target.value);
   }
-  /*function findOrder() {
-    setModalVisible(true);
-    setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
-    console.log("finding order");
-  }*/
+
 
   // email search
   // Changes in logic to get all orders with the specified email
@@ -115,55 +111,6 @@ export default function Home() {
   
   return (
     <main className="  flex flex-col ">
-      {/* {modalVisible && (
-        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="  flex  w-1/2 bg-white   text-dark-purple shadow-md">
-            {previousCustomer ? (
-              <div className=" flex w-2/3 flex-col  gap-4  p-20  ">
-                <h1 className="text-xl">YOUR ORDER</h1>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Date:</p>
-                  <p className=" text-xs">{previousCustomer.date.date}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Time:</p>
-                  <p className="text-xs">{previousCustomer.date.time}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Guests:</p>
-                  <p className="text-xs"> {previousCustomer.people}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Meal: </p>
-                  <p className="text-xs">{previousCustomer.meal}</p>
-                </div>
-                <div className="flex flex-col gap-2  pb-6">
-                  <p className="text-sm">Drinks: </p>
-                  <div className="text-xs">
-                    {previousCustomer.drinks.map((drink, index) => (
-                      <p key={index}>{drink}</p>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex justify-around">
-                  <button
-                    className="h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-dark-purple "
-                    onClick={hideModal}
-                  >
-                    CLOSE
-                  </button>
-
-                  <Link href="/booking">
-                    <button
-                      onClick={changeStep}
-                      className="h-8 w-28 rounded-lg border-2 border-black  bg-dark-purple text-xs text-white "
-                    >
-                      UPDATE ORDER
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            ) : ( */}
       {modalVisible && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="flex w-1/2 bg-white text-dark-purple shadow-md">
