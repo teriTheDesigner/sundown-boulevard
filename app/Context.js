@@ -8,7 +8,7 @@ export const DispatchContext = createContext();
 const initialState = {
   customer: {
     name: "",
-    step: "",
+    step: "meal",
     previousCustomer: false,
     email: "",
     meals: [],
