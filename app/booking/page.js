@@ -67,6 +67,11 @@ export default function Booking() {
     return meals;
   }
 
+  const generateNewMeals = async () => {
+    const newMeals = await fetchMeals(9);
+    setMealData(newMeals);
+  };
+
   const selectMeal = (meal) => {
     dispatch({
       type: "ADD_MEAL",
@@ -133,6 +138,12 @@ export default function Booking() {
               NEXT
             </button>
           </Link>
+          <button
+            onClick={generateNewMeals}
+            className="h-8 w-24 rounded-lg border-2 border-dark-blue bg-white text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+          >
+            Generate Meal
+          </button>
         </div>
       </div>
     </div>
