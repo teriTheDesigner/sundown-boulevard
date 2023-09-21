@@ -41,7 +41,11 @@ export default function Receipt() {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-xs">Meal: </p>
-          <p className="text-xs">{customer.meal}</p>
+          <div className="text-xs">
+            {customer.meals.map((meal, index) => (
+              <p key={index}>{meal.mealName}</p>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-xs">Drinks: </p>
