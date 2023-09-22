@@ -28,12 +28,11 @@ export default function Home() {
   }
 
 
-  // email search
-  // Changes in logic to get all orders with the specified email
+  // Order for email
   function findOrder() {
     setModalVisible(true);
 
-    // An array to store the matched customers
+    // Matched customers Array
     const matchedCustomers = [];
 
     // Iterate over all keys in localStorage.
