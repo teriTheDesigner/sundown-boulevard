@@ -126,7 +126,7 @@ export default function Home() {
                       <p className="text-xs">#{customer.id}</p>
                       <p className="text-sm">Meals in this order:</p>
                     <ul>
-                      {customer.meals && customer.meals.map((meal) => (
+                      {customer.meals.map((meal) => (
                         <li key={meal.mealId} className="text-xs">
                           {meal.mealName}
                         </li>
