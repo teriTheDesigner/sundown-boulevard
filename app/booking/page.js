@@ -21,9 +21,6 @@ export default function Booking() {
 
   useEffect(() => {
     const updatingOrderId = localStorage.getItem("updatingOrder");
-    /*if (!updatingOrderId) {
-      dispatch({ type: "CLEAR_BASKET" });
-    }*/
 
     const fetchSavedMeals = () => {
       if (!updatingOrderId) {

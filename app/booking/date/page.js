@@ -83,9 +83,6 @@ export default function Date() {
     });
   };
 
- /* function storeData() {
-    localStorage.setItem(customer.email, JSON.stringify(customer));
-  }*/
 
   function getNextId() {
     // Fetch the last used ID from localStorage
