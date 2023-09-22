@@ -100,9 +100,9 @@ export default function Date() {
     // If there's an updatingOrderId and it's valid, use it
     if (updatingOrderId && localStorage.getItem(updatingOrderId)) {
       id = updatingOrderId;
-      localStorage.removeItem('updatingOrder'); // remove it after using so it to not affect future orders
+      localStorage.removeItem('updatingOrder'); // remove after use
     } else {
-      // Else, use the next auto-incremented ID
+      // Else use auto-incremented ID
       id = getNextId();
       // Store this ID for the future
       localStorage.setItem("lastId", id.toString());
@@ -150,10 +150,10 @@ export default function Date() {
 }
 
 function isTimeSlotTaken(date, time) {
-  // Convert localStorage data to array of objects
+  // Convert LS to array with object of data
   const allStoredData = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)));
 
-  // .some() method to check if stored data matches
+  
   return allStoredData.some(savedData => savedData?.date?.date === date && savedData?.date?.time === time);
 }
 
