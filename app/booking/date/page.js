@@ -85,7 +85,7 @@ export default function Date() {
 
 
   function getNextId() {
-    // Fetch the last used ID from localStorage
+    // Fetch the last used ID
     const lastId = parseInt(localStorage.getItem("lastId") || "0", 10);
   
     return lastId + 1;
@@ -94,21 +94,21 @@ export default function Date() {
   function storeData() {
     let id;
   
-    // Check if there's an updatingOrder in localStorage
+    // Check if there's an updatingOrder
     const updatingOrderId = localStorage.getItem('updatingOrder');
   
     // If there's an updatingOrderId and it's valid, use it
     if (updatingOrderId && localStorage.getItem(updatingOrderId)) {
       id = updatingOrderId;
-      localStorage.removeItem('updatingOrder'); // remove it after using so it doesn't affect future orders
+      localStorage.removeItem('updatingOrder'); // remove it after using so it to not affect future orders
     } else {
       // Else, use the next auto-incremented ID
       id = getNextId();
-      // Store this ID back to localStorage for the future
+      // Store this ID for the future
       localStorage.setItem("lastId", id.toString());
     }
     
-    // Save the order data with the ID in localstorage
+    // Save to LS
     localStorage.setItem(id.toString(), JSON.stringify({...customer, email: customer.email}));
   }
 
