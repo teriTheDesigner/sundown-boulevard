@@ -182,6 +182,7 @@ export default function Home() {
               <Link href="/booking">
                 <button
                   onClick={() => {
+                    dispatch({ type: "CLEAR_BASKET" })
                     changeStep();
                     removeUpdatingOrder();
                   }}
