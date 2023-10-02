@@ -25,10 +25,10 @@ const formReducer = (state, action) => {
   switch (action.type) {
     case "ADD_MEAL":
       const newMeal = {
-        mealName: action.payload.mealName,
-        mealId: action.payload.mealId,
-        mealCategory: action.payload.mealCategory,
-        mealImg: action.payload.mealImg,
+        mealName: action.payload?.mealName,
+        mealId: action.payload?.mealId,
+        mealCategory: action.payload?.mealCategory,
+        mealImg: action.payload?.mealImg,
       };
       return {
         ...state,
@@ -38,23 +38,26 @@ const formReducer = (state, action) => {
         },
       };
 
-    case "REMOVE_MEAL":
-      const mealIdToRemove = action.payload.mealId;
-      const mealIndex = state.customer.meals.findIndex(
-        (meal) => meal.mealId === mealIdToRemove,
-      );
-      if (mealIndex === -1) return state; // If meal is not found, return the current state.
-
-      const updatedMeals = [...state.customer.meals];
-      updatedMeals.splice(mealIndex, 1); // Remove only one instance of the meal.
-
-      return {
-        ...state,
-        customer: {
-          ...state.customer,
-          meals: updatedMeals,
-        },
-      };
+      case "REMOVE_MEAL":
+        const mealIdToRemove = action.payload.mealId;
+        const updatedMeals = [...state.customer.meals]; 
+      
+        const mealIndex = updatedMeals.findIndex(
+          (meal) => meal.mealId === mealIdToRemove
+        );
+      
+        if (mealIndex !== -1) {
+          updatedMeals.splice(mealIndex, 1); 
+        }
+      
+        return {
+          ...state,
+          customer: {
+            ...state.customer,
+            meals: updatedMeals,
+          },
+        };
+      
 
     case "CHANGE_STEP":
       return {
