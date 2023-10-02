@@ -26,7 +26,6 @@ export default function Basket() {
         type: "REMOVE_DRINK",
         payload: index,
       });
-      console.log("Removing drink", drinkName);
     }
   };
 
@@ -52,7 +51,6 @@ export default function Basket() {
         type: "REMOVE_MEAL",
         payload: { mealId: mealToRemove.mealId },
       });
-      console.log("Removing meal", mealName);
     }
   };
   
