@@ -39,6 +39,7 @@ export default function Date() {
         ],
 
         onChange: (selectedDates, dateStr) => {
+          console.log("Selected date:", dateStr);
           setDateSelected(true);  // set to true once a date is picked
           dispatch({
               type: "UPDATE_DATE",
@@ -162,7 +163,7 @@ function isTimeSlotTaken(date, time) {
       <div className="grid grid-cols-12 gap-2 pt-6">
         {" "}
         <div className="flex gap-20">
-        <form>
+        <form className="">
           <div className="flex flex-col gap-20">
             <div className="flex flex-col gap-6">
               <p>Number of guests</p>
@@ -242,25 +243,25 @@ function isTimeSlotTaken(date, time) {
           </label>
         </form>
 
-        {dateSelected && (
-  <div>
-    <p className="ml-5">Select a time:</p>
-    <div className="flex flex-wrap">
-      {TIME_SLOTS.map((slot, idx) => (
-        <div key={idx} className="md:w-1/4 md:px-4">
-          <button 
-            className={`time-slot w-20 mr-56 px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 focus:bg-blue-500 hover:bg-blue-500"}`}
-            onClick={() => handleTimeSlotClick(slot)}
-            disabled={isTimeSlotTaken(customer.date.date, slot)}
-          >
-            {slot}
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
+          {dateSelected && (
+            <div>
+              <p>Select a time:</p>
+              <div className="flex flex-wrap">
+                {TIME_SLOTS.map((slot, idx) => (
+                  <div key={idx} className="
+                  text-center">
+                    <button 
+                      className={`time-slot px-4 py-2 bg-blue-300 my-1 text-white rounded-full transition-all duration-200 ${isTimeSlotTaken(customer.date.date, slot) ? "!bg-red-500 px-2 py-1 cursor-not-allowed rounded-full" : "hover:rounded-full px-2 py-1 focus:bg-blue-500 hover:bg-blue-500"}`}
+                      onClick={() => handleTimeSlotClick(slot)}
+                      disabled={isTimeSlotTaken(customer.date.date, slot)}
+                    >
+                      {slot}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 </div>
 
 
