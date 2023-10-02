@@ -45,7 +45,7 @@ export default function Booking() {
       setMealData([...savedMeals, ...fetchedMeals]);
     });
   }, []);
-
+  
   async function fetchMeals(count) {
     const meals = [];
     for (let i = 0; i < count; i++) {
@@ -53,16 +53,21 @@ export default function Booking() {
         "https://www.themealdb.com/api/json/v1/1/random.php",
       );
       const data = await res.json();
-      const allMeal = {
-        mealName: data.meals[0].strMeal,
-        mealId: data.meals[0].idMeal,
-        mealCategory: data.meals[0].strCategory,
-        mealImg: data.meals[0].strMealThumb,
-      };
-      meals.push(allMeal);
+      const mealData = data.meals?.[0];
+  
+      if (mealData) {
+        const allMeal = {
+          mealName: mealData.strMeal,
+          mealId: mealData.idMeal,
+          mealCategory: mealData.strCategory,
+          mealImg: mealData.strMealThumb,
+        };
+        meals.push(allMeal);
+      }
     }
     return meals;
   }
+  
 
   const generateNewMeals = async () => {
     const newMeals = await fetchMeals(9);
