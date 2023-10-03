@@ -6,15 +6,15 @@ export default function Basket() {
   const dispatch = useContext(DispatchContext);
 
   const separateDrinks = () => {
-    const drinkCount = {};
+    const individualDrinks = {};
 
     customer.drinks.forEach((drink) => {
-      drinkCount[drink] = (drinkCount[drink] || 0) + 1;
+      individualDrinks[drink] = (individualDrinks[drink] || 0) + 1;
     });
 
-    return Object.keys(drinkCount).map((drinkName) => ({
+    return Object.keys(individualDrinks).map((drinkName) => ({
       name: drinkName,
-      count: drinkCount[drinkName],
+      count: individualDrinks[drinkName],
     }));
   };
 
