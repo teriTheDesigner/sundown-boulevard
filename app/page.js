@@ -26,11 +26,44 @@ export default function Home() {
   function getEmail(e) {
     setEmail(e.target.value);
   }
+
+
+  // Order for email
   function findOrder() {
     setModalVisible(true);
-    setPreviousCustomer(JSON.parse(localStorage.getItem(email)));
+
+    // Matched customers Array
+    const matchedCustomers = [];
+
+    // Iterate over all keys in localStorage.
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const customer = JSON.parse(localStorage.getItem(key));
+
+      // Check if input email matches the provided email
+      if (customer && customer.email === email) {
+        matchedCustomers.push({
+          ...customer,
+          id: key, // added the ID (which is the key in localStorage) to the customer object
+        });
+      }
+    }
+
+    setPreviousCustomer(matchedCustomers);
     console.log("finding order");
   }
+
+  function handleUpdateOrder(customer) {
+    // Saving the order id to local storage to the key updatingOrder
+    localStorage.setItem('updatingOrder', customer.id);
+    
+    updateCustomer(customer);
+    dispatch({
+      type: "CHANGE_STEP",
+      payload: "meal",
+    });
+}
+
 
   useEffect(() => {
     AOS.init();
@@ -43,10 +76,10 @@ export default function Home() {
     }
   }, [previousCustomer]);
 
-  function updateCustomer() {
+  function updateCustomer(customer) {
     dispatch({
       type: "UPDATE_CUSTOMER",
-      payload: previousCustomer,
+      payload: customer,
     });
   }
 
@@ -70,75 +103,74 @@ export default function Home() {
       payload: "meal",
     });
   }
+
+  function removeUpdatingOrder() {
+    localStorage.removeItem('updatingOrder');
+  }
+  
   return (
     <main className="  flex flex-col ">
-      {modalVisible && (
-        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="  flex  w-1/2 bg-white   text-dark-purple shadow-md">
-            {previousCustomer ? (
-              <div className=" flex w-2/3 flex-col  gap-4  p-20  ">
-                <h1 className="text-xl">YOUR ORDER</h1>
+{modalVisible && (
+  <div className="fixed left-0 top-0 z-50 flex h-full w-full justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="flex w-1/2 bg-white text-dark-purple shadow-md">
+      {previousCustomer && previousCustomer.length ? (
+        <div className="flex w-2/3 flex-col gap-4 p-20">
+          <h1 className="text-xl">YOUR ORDERS</h1>
+          <div className="max-h-[80vh] overflow-y-auto">
+            {previousCustomer.map((customer) => (
+              <div key={customer.id}>
                 <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Date:</p>
-                  <p className=" text-xs">{previousCustomer.date.date}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Time:</p>
-                  <p className="text-xs">{previousCustomer.date.time}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Guests:</p>
-                  <p className="text-xs"> {previousCustomer.people}</p>
-                </div>
-                <div className="flex flex-col gap-2 border-b border-dark-purple pb-4">
-                  <p className="text-sm">Meal: </p>
-                  <p className="text-xs">{previousCustomer.meal}</p>
-                </div>
-                <div className="flex flex-col gap-2  pb-6">
-                  <p className="text-sm">Drinks: </p>
-                  <div className="text-xs">
-                    {previousCustomer.drinks.map((drink, index) => (
-                      <p key={index}>{drink}</p>
+                  <p className="text-sm">Email:</p>
+                  <p className="text-xs">{customer.email}</p>
+                  <p className="text-sm">ID:</p>
+                  <p className="text-xs">#{customer.id}</p>
+                  <p className="text-sm">Meals in this order:</p>
+                  <ul>
+                    {customer.meals.map((meal) => (
+                      <li key={meal.mealId} className="text-xs">
+                        {meal.mealName}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
-                <div className="flex justify-around">
+                <Link href="/booking">
                   <button
-                    className="h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-dark-purple "
-                    onClick={hideModal}
+                    onClick={() => handleUpdateOrder(customer)}
+                    className="h-8 w-28 rounded-lg border-2 border-black bg-dark-purple text-xs text-white "
                   >
-                    CLOSE
+                    UPDATE ORDER
                   </button>
-
-                  <Link href="/booking">
-                    <button
-                      onClick={changeStep}
-                      className="h-8 w-28 rounded-lg border-2 border-black  bg-dark-purple text-xs text-white "
-                    >
-                      UPDATE ORDER
-                    </button>
-                  </Link>
-                </div>
+                </Link>
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center gap-6 p-20 text-center ">
-                <h1 className="mb-2 text-lg ">EMAIL NOT FOUND</h1>
-                <p className="text-xs">
-                  We couldn&apos;t locate your email in our records. Please make
-                  sure you have entered the correct email address or consider
-                  creating a new reservation.
-                </p>
-                <button
-                  className=" h-8 w-24 rounded-lg border-2 border-gray-300  text-xs text-black "
-                  onClick={hideModal}
-                >
-                  CLOSE
-                </button>
-              </div>
-            )}
+            ))}
           </div>
+          <button
+            className="h-8 w-24 rounded-lg border-2 border-gray-300 text-xs text-dark-purple"
+            onClick={hideModal}
+          >
+            CLOSE
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center gap-6 p-20 text-center">
+          <h1 className="mb-2 text-lg">EMAIL NOT FOUND</h1>
+          <p className="text-xs">
+            We couldn&apos;t locate your email in our records. Please make
+            sure you have entered the correct email address or consider
+            creating a new reservation.
+          </p>
+          <button
+            className="h-8 w-24 rounded-lg border-2 border-gray-300 text-xs text-black"
+            onClick={hideModal}
+          >
+            CLOSE
+          </button>
         </div>
       )}
+    </div>
+  </div>
+)}
+
       <section className="  bg-black  pb-32 pt-32 text-white ">
         <div className="  content-container mx-auto grid grid-cols-12 gap-2 ">
           <div className="col-start-1 col-end-5 flex  flex-col justify-between ">
@@ -151,7 +183,11 @@ export default function Home() {
 
               <Link href="/booking">
                 <button
-                  onClick={changeStep}
+                  onClick={() => {
+                    dispatch({ type: "CLEAR_BASKET" })
+                    changeStep();
+                    removeUpdatingOrder();
+                  }}
                   className="mt-12 h-12 w-44  rounded-lg border-2 border-dark-red bg-dark-red text-sm text-white hover:bg-dark-red hover:text-background-white"
                 >
                   BOOK A TABLE

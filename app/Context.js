@@ -8,13 +8,10 @@ export const DispatchContext = createContext();
 const initialState = {
   customer: {
     name: "",
-    step: "",
+    step: "meal",
     previousCustomer: false,
     email: "",
-    meal: "",
-    mealId: "",
-    mealImg: "",
-    mealCategory: "",
+    meals: [],
     drinks: [],
     people: 1,
     date: {
@@ -26,18 +23,41 @@ const initialState = {
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_MEAL":
-      const meal = action.payload;
+    case "ADD_MEAL":
+      const newMeal = {
+        mealName: action.payload?.mealName,
+        mealId: action.payload?.mealId,
+        mealCategory: action.payload?.mealCategory,
+        mealImg: action.payload?.mealImg,
+      };
       return {
         ...state,
         customer: {
           ...state.customer,
-          meal: meal.mealName,
-          mealId: meal.mealId,
-          mealCategory: meal.mealCategory,
-          mealImg: meal.mealImg,
+          meals: [...state.customer.meals, newMeal],
         },
       };
+
+      case "REMOVE_MEAL":
+        const mealIdToRemove = action.payload.mealId;
+        const updatedMeals = [...state.customer.meals]; 
+      
+        const mealIndex = updatedMeals.findIndex(
+          (meal) => meal.mealId === mealIdToRemove
+        );
+      
+        if (mealIndex !== -1) {
+          updatedMeals.splice(mealIndex, 1); 
+        }
+      
+        return {
+          ...state,
+          customer: {
+            ...state.customer,
+            meals: updatedMeals,
+          },
+        };
+      
 
     case "CHANGE_STEP":
       return {
@@ -47,6 +67,7 @@ const formReducer = (state, action) => {
           step: action.payload,
         },
       };
+
     case "ADD_DRINK":
       return {
         ...state,
@@ -80,6 +101,7 @@ const formReducer = (state, action) => {
           },
         },
       };
+
     case "ADD_GUEST":
       return {
         ...state,
@@ -88,6 +110,7 @@ const formReducer = (state, action) => {
           people: state.customer.people + 1,
         },
       };
+
     case "REMOVE_GUEST":
       return {
         ...state,
@@ -96,6 +119,7 @@ const formReducer = (state, action) => {
           people: state.customer.people - 1,
         },
       };
+
     case "ADD_EMAIL":
       return {
         ...state,
@@ -115,36 +139,7 @@ const formReducer = (state, action) => {
       };
 
     case "CLEAR_BASKET":
-      return {
-        ...state,
-        customer: {
-          ...state.customer,
-          email: "",
-          meal: "",
-          name: "",
-          mealId: "",
-          mealImg: "",
-          mealCategory: "",
-          drinks: [],
-          people: 1,
-          date: {
-            date: "",
-            time: "",
-          },
-          previousCustomer: false,
-        },
-      };
-    case "CLEAR_MEAL":
-      return {
-        ...state,
-        customer: {
-          ...state.customer,
-          meal: "",
-          mealId: "",
-          mealCategory: "",
-          mealImg: "",
-        },
-      };
+      return initialState;
 
     case "UPDATE_CUSTOMER":
       const customer = action.payload;
@@ -153,13 +148,10 @@ const formReducer = (state, action) => {
         customer: {
           ...state.customer,
           email: customer?.email,
-          meal: customer?.meal,
+          meals: customer?.meals,
           drinks: customer?.drinks,
           people: customer?.people,
           date: customer?.date,
-          mealCategory: customer?.mealCategory,
-          mealImg: customer?.mealImg,
-          mealId: customer?.mealId,
           previousCustomer: true,
           name: customer?.name,
         },

@@ -10,6 +10,7 @@ import Basket from "../components/Basket";
 export default function Booking() {
   const dispatch = useContext(DispatchContext);
   const { customer } = useContext(Context);
+  const [mealData, setMealData] = useState([]);
 
   function nextStep() {
     dispatch({
@@ -19,68 +20,132 @@ export default function Booking() {
   }
 
   useEffect(() => {
-    if (!customer.meal) {
-      FetchMeal();
-    }
-  }, []);
+    const updatingOrderId = localStorage.getItem("updatingOrder");
 
-  async function FetchMeal() {
-    const res = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/random.php",
-    );
-    const data = await res.json();
-    const mealName = data.meals[0].strMeal;
-    const mealId = data.meals[0].idMeal;
-    const mealImg = data.meals[0].strMealThumb;
-    const mealCategory = data.meals[0].strCategory;
+    const fetchSavedMeals = () => {
+      if (!updatingOrderId) {
+        return []; //no meals if nor oderid
+      }
 
-    console.log("adding", mealName, "to Meals");
-    dispatch({
-      type: "UPDATE_MEAL",
-      payload: { mealName, mealId, mealCategory, mealImg },
+      const savedOrder = JSON.parse(localStorage.getItem(updatingOrderId));
+      if (savedOrder && savedOrder.meals) {
+        const uniqueMealIds = new Set();
+        return savedOrder.meals.filter((meal) => {
+          const notSeenBefore = !uniqueMealIds.has(meal.mealId);
+          uniqueMealIds.add(meal.mealId);
+          return notSeenBefore;
+        });
+      }
+      return [];
+    };
+
+    const savedMeals = fetchSavedMeals();
+    const mealsToFetch = 9 - savedMeals.length;
+    fetchMeals(mealsToFetch).then((fetchedMeals) => {
+      setMealData([...savedMeals, ...fetchedMeals]);
     });
+  }, []);
+  
+  async function fetchMeals(count) {
+    const meals = [];
+    for (let i = 0; i < count; i++) {
+      const res = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/random.php",
+      );
+      const data = await res.json();
+      const mealData = data.meals?.[0];
+  
+      if (mealData) {
+        const allMeal = {
+          mealName: mealData.strMeal,
+          mealId: mealData.idMeal,
+          mealCategory: mealData.strCategory,
+          mealImg: mealData.strMealThumb,
+        };
+        meals.push(allMeal);
+      }
+    }
+    return meals;
   }
+  
 
-  console.log(customer.meal);
+  const generateNewMeals = async () => {
+    const newMeals = await fetchMeals(9);
+    setMealData(newMeals);
+  };
+
+  const selectMeal = (meal) => {
+    dispatch({
+      type: "ADD_MEAL",
+      payload: {
+        mealName: meal.mealName,
+        mealId: meal.mealId,
+        mealCategory: meal.mealCategory,
+        mealImg: meal.mealImg,
+      },
+    });
+  };
+
   return (
-    <div className=" content-container mx-auto pb-32 pt-16 ">
+    <div className="content-container mx-auto pb-32 pt-16">
       <Stepper></Stepper>
 
-      <div className="grid grid-cols-12 gap-2  pt-6  ">
-        <div className="col-start-1 col-end-9 flex gap-16 ">
-          <div>
-            <Image
-              width="150"
-              height="150"
-              className="w-full"
-              src={customer.mealImg}
-              alt="mealImg"
-            />
-            <div className="flex flex-col  gap-4">
-              <h2>{customer.meal.toUpperCase()}</h2>
-              <p className="text-sm">Category: {customer.mealCategory}</p>
-              <button
-                onClick={FetchMeal}
-                className="h-8 w-32 rounded-lg border-2  border-dark-blue bg-white  text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+      <div className="grid grid-cols-12 gap-2 pt-6">
+        <div className="col-start-1 col-end-10 grid grid-cols-3 gap-4">
+          {mealData.map((meal) => {
+            const mealCount = customer.meals.filter(
+              (chosenMeal) => chosenMeal.mealId === meal.mealId,
+            ).length;
+            const isSelected = mealCount > 0;
+
+            return (
+              <div
+                onClick={() => selectMeal(meal)}
+                key={meal.mealId}
+                className={`relative flex flex-col items-center gap-4 rounded-lg pb-2 text-center 
+        ${
+          isSelected
+            ? "border-2 border-dark-purple/80"
+            : "border-2 border-light-blue"
+        }`}
               >
-                NEW MEAL
-              </button>
-            </div>
-          </div>
+                {isSelected && (
+                  <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-dark-purple text-white">
+                    {mealCount}
+                  </div>
+                )}
+                <Image
+                  width="150"
+                  height="150"
+                  className="w-full"
+                  src={meal.mealImg}
+                  alt={meal.mealName}
+                />
+                <h2>{meal.mealName.toUpperCase()}</h2>
+                <p className="text-sm">Category: {meal.mealCategory}</p>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
+        <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4 border-l border-dark-purple pl-4 text-sm">
           <h5>YOUR ORDER</h5>
           <Basket></Basket>
 
           <Link href="/booking/drinks">
             <button
               onClick={nextStep}
-              className="h-8 w-24 rounded-lg  border-2  border-dark-blue bg-white  text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+              className="h-8 w-24 rounded-lg border-2 border-dark-blue bg-white text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
             >
               NEXT
             </button>
           </Link>
+          <button
+            onClick={generateNewMeals}
+            className="h-8 w-24 rounded-lg border-2 border-dark-blue bg-white text-xs text-dark-blue hover:bg-dark-blue hover:text-background-white"
+          >
+            Generate Meal
+          </button>
         </div>
       </div>
     </div>

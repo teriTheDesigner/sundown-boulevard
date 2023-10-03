@@ -46,11 +46,15 @@ export default function Drinks() {
         <div className="col-start-1 col-end-10 grid grid-cols-3 gap-2">
           {drinks
             ? drinks.map((drink) => {
-                const isSelected = customer.drinks.includes(drink.name);
+                const drinkCount = customer.drinks.filter(
+                  (chosenDrink) => chosenDrink === drink.name,
+                ).length;
+
+                const isSelected = drinkCount > 0;
 
                 return (
                   <div
-                    className={` flex h-80 w-60 cursor-pointer flex-col place-items-center justify-between  rounded-lg bg-white p-4 ${
+                    className={` relative flex h-80 w-60 cursor-pointer flex-col place-items-center justify-between  rounded-lg bg-white p-4 ${
                       isSelected
                         ? "border-2 border-dark-purple/80"
                         : "border-2 border-light-blue"
@@ -58,6 +62,11 @@ export default function Drinks() {
                     onClick={() => addDrinks(drink.name)}
                     key={drink.id}
                   >
+                    {isSelected && (
+                      <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-dark-purple text-white">
+                        {drinkCount}
+                      </div>
+                    )}
                     <Image
                       alt={drink.name}
                       className="m-auto"

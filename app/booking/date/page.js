@@ -13,6 +13,24 @@ export default function Date() {
   const dispatch = useContext(DispatchContext);
   const [emailError, setEmailError] = useState();
   const [nameError, setNameError] = useState();
+  const [dateSelected, setDateSelected] = useState(false);
+
+  const TIME_SLOTS = [
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+    "22:00",
+    "22:30",
+  ];
 
   useEffect(() => {
     const inputElement = document.getElementById("dateTimeInput");
@@ -24,7 +42,7 @@ export default function Date() {
         },
 
         minDate: "today",
-        enableTime: true,
+        enableTime: false,
         minTime: "16:00",
         maxTime: "22:30",
         time_24hr: true,
@@ -34,15 +52,11 @@ export default function Date() {
           },
         ],
 
-        onChange: (selectedDates, dateStr, instance) => {
-          const [date, time] = dateStr.split(" ");
-          console.log("Full date:", dateStr);
-          console.log("Selected date", date);
-          console.log("selected time", time);
-
+        onChange: (selectedDates, dateStr) => {
+          setDateSelected(true); // set to true once a date is picked
           dispatch({
             type: "UPDATE_DATE",
-            payload: { date, time },
+            payload: { date: dateStr, time: customer.date.time },
           });
         },
       };
@@ -81,8 +95,35 @@ export default function Date() {
     });
   };
 
+  function getNextId() {
+    // Fetch the last used ID
+    const lastId = parseInt(localStorage.getItem("lastId") || "0", 10);
+
+    return lastId + 1;
+  }
+
   function storeData() {
-    localStorage.setItem(customer.email, JSON.stringify(customer));
+    let id;
+
+    // Check if there's an updatingOrder
+    const updatingOrderId = localStorage.getItem("updatingOrder");
+
+    // If there's an updatingOrderId and it's valid, use it
+    if (updatingOrderId && localStorage.getItem(updatingOrderId)) {
+      id = updatingOrderId;
+      localStorage.removeItem("updatingOrder"); // remove after use
+    } else {
+      // Else use auto-incremented ID
+      id = getNextId();
+      // Store this ID for the future
+      localStorage.setItem("lastId", id.toString());
+    }
+
+    // Save to LS
+    localStorage.setItem(
+      id.toString(),
+      JSON.stringify({ ...customer, email: customer.email }),
+    );
   }
 
   const handleEmailBlur = (value) => {
@@ -111,90 +152,138 @@ export default function Date() {
     setNameError("");
   };
 
+  function handleTimeSlotClick(selectedTime) {
+    dispatch({
+      type: "UPDATE_DATE",
+      payload: {
+        ...customer.date,
+        time: selectedTime,
+      },
+    });
+  }
+
+  function isTimeSlotTaken(date, time) {
+    // Convert LS to array with object of data
+    const allStoredData = Object.keys(localStorage).map((key) =>
+      JSON.parse(localStorage.getItem(key)),
+    );
+
+    return allStoredData.some(
+      (savedData) =>
+        savedData?.date?.date === date && savedData?.date?.time === time,
+    );
+  }
+
   return (
     <div className="content-container mx-auto pb-32 pt-16">
       <Stepper></Stepper>
       <div className="grid grid-cols-12 gap-2 pt-6">
         {" "}
-        <form className="flex gap-20">
-          <div className="flex flex-col gap-20">
-            <div className="flex flex-col gap-6">
-              <p>Number of guests</p>
-              <div className="flex  items-center gap-6">
-                <button
-                  type="button"
-                  className={`${
-                    customer.people <= 1
-                      ? " h-8 w-6  bg-gray-300 text-black"
-                      : "h-8   w-6 border-2 border-dark-purple/20 bg-white text-black "
-                  }`}
-                  onClick={removeGuest}
-                  disabled={customer.people <= 1 ? true : false}
-                >
-                  -
-                </button>{" "}
-                <p>{customer.people}</p>
-                <button
-                  disabled={customer.people >= 10 ? true : false}
-                  className={`${
-                    customer.people >= 10
-                      ? " h-8 w-6 bg-gray-300 text-black"
-                      : "h-8 w-6 border-2 border-dark-purple/20 bg-white text-black"
-                  }`}
-                  type="button"
-                  onClick={addGuest}
-                >
-                  +
-                </button>
+        <div className="flex gap-20">
+          <form>
+            <div className="flex flex-col gap-20">
+              <div className="flex flex-col gap-6">
+                <p>Number of guests</p>
+                <div className="flex  items-center gap-6">
+                  <button
+                    type="button"
+                    className={`${
+                      customer.people <= 1
+                        ? " h-8 w-6  bg-gray-300 text-black"
+                        : "h-8   w-6 border-2 border-dark-purple/20 bg-white text-black "
+                    }`}
+                    onClick={removeGuest}
+                    disabled={customer.people <= 1 ? true : false}
+                  >
+                    -
+                  </button>{" "}
+                  <p>{customer.people}</p>
+                  <button
+                    disabled={customer.people >= 10 ? true : false}
+                    className={`${
+                      customer.people >= 10
+                        ? " h-8 w-6 bg-gray-300 text-black"
+                        : "h-8 w-6 border-2 border-dark-purple/20 bg-white text-black"
+                    }`}
+                    type="button"
+                    onClick={addGuest}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              {customer.previousCustomer ? null : (
+                <div className="flex flex-col gap-4">
+                  <label className=" flex flex-col gap-2 text-sm">
+                    Your Name
+                    <input
+                      onBlur={(e) => handleNameBlur(e.target.value)}
+                      onFocus={() => handleNameFocus()}
+                      onChange={addName}
+                      placeholder="John Smith"
+                      type="name"
+                      className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
+                    ></input>
+                    {nameError && (
+                      <span className="text-xs text-dark-red opacity-80">
+                        {nameError}
+                      </span>
+                    )}
+                  </label>
+                  <label className=" flex flex-col gap-2 text-sm">
+                    Your Email
+                    <input
+                      className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
+                      type="email"
+                      placeholder="your@email.com"
+                      onChange={addEmail}
+                      onBlur={(e) => handleEmailBlur(e.target.value)}
+                      onFocus={() => handleEmailFocus()}
+                    ></input>
+                    {emailError && (
+                      <span className="text-xs text-dark-red opacity-80">
+                        {emailError}
+                      </span>
+                    )}
+                  </label>
+                </div>
+              )}
+            </div>
+            <label className="flex flex-col  gap-8">
+              Pick a date and time for your booking:
+              <input
+                id="dateTimeInput"
+                className="h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 text-sm font-thin  text-dark-purple  focus:outline-dark-purple/70"
+                name="booking"
+                placeholder="YYYY-MM-DD"
+              />
+            </label>
+          </form>
+          {dateSelected && (
+            <div>
+              <p className="ml-5">Select a time:</p>
+              <div className="flex flex-wrap">
+                {TIME_SLOTS.map((slot, idx) => (
+                  <div key={idx} className="md:w-1/4 md:px-4">
+                    <button
+                      className={`time-slot my-1 mr-56 w-20 px-4 py-2 ${
+                        customer.date.time === slot
+                          ? "rounded-full bg-blue-800 text-white"
+                          : isTimeSlotTaken(customer.date.date, slot)
+                          ? "cursor-not-allowed rounded-full bg-gray-300 text-gray-800"
+                          : "rounded-full bg-blue-300 text-white hover:bg-blue-500"
+                      }`}
+                      onClick={() => handleTimeSlotClick(slot)}
+                      disabled={isTimeSlotTaken(customer.date.date, slot)}
+                    >
+                      {slot}
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
-            {customer.previousCustomer ? null : (
-              <div className="flex flex-col gap-4">
-                <label className=" flex flex-col gap-2 text-sm">
-                  Your Name
-                  <input
-                    onBlur={(e) => handleNameBlur(e.target.value)}
-                    onFocus={() => handleNameFocus()}
-                    onChange={addName}
-                    placeholder="John Smith"
-                    type="name"
-                    className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
-                  ></input>
-                  {nameError && (
-                    <span className="text-xs text-dark-red opacity-80">
-                      {nameError}
-                    </span>
-                  )}
-                </label>
-                <label className=" flex flex-col gap-2 text-sm">
-                  Your Email
-                  <input
-                    className=" h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 font-thin text-dark-purple focus:outline-dark-purple/70"
-                    type="email"
-                    placeholder="your@email.com"
-                    onChange={addEmail}
-                    onBlur={(e) => handleEmailBlur(e.target.value)}
-                    onFocus={() => handleEmailFocus()}
-                  ></input>
-                  {emailError && (
-                    <span className="text-xs text-dark-red opacity-80">
-                      {emailError}
-                    </span>
-                  )}
-                </label>
-              </div>
-            )}
-          </div>
-          <label className="flex flex-col  gap-8">
-            Pick a date and time for your booking:
-            <input
-              id="dateTimeInput"
-              className="h-12 w-64 rounded-lg border-2 border-dark-purple/50 p-2 text-sm font-thin  text-dark-purple  focus:outline-dark-purple/70"
-              name="booking"
-              placeholder="YYYY-MM-DD"
-            />
-          </label>
-        </form>
+          )}
+        </div>
         <div className="top-1/5 sticky col-start-11 col-end-13 flex h-96 flex-col gap-4  border-l border-dark-purple pl-4 text-sm">
           <h5>YOUR ORDER</h5>
           <div className="flex flex-col gap-2  ">
