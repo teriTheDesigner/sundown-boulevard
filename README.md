@@ -3,7 +3,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ✨ Sundown Boulevard ✨
 
+📘 About the project
 
+The project is a booking flow for a restaurant where the user can choose a meal, drinks, date and the number of people. The data is saved to local storage and fetched, if the user had already made an order and wants to change it. 
 
 🌱 Prerequisites for setup
 
@@ -41,11 +43,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 @teriTheDesigner 
 @lucasjolibois54 
-
-
-📘 About the project
-
-The project is a booking flow for a restaurant where the user can choose a meal, drinks, date and the number of people. The data is saved to local storage and fetched, if the user had already made an order and wants to change it. 
 
 
 🚀 Deployment
